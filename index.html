@@ -242,7 +242,7 @@ footer.foot{border-top:0;color:#6d745d}
 .pips{gap:5px}
 .pip{width:26px;height:26px;font-family:var(--font-display);font-weight:700;font-size:13px}
 .pip.g{background:var(--lime)}
-.kv{display:grid;grid-template-columns:repeat(3,1fr);margin:0;border-top:1px solid var(--line)}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);margin:0;border-top:1px solid var(--line)}
 .kv>div{padding:12px 0 0 12px;border-left:1px solid var(--line)}
 .kv>div:first-child{padding-left:0;border-left:0}
 .kv dt{font-size:12.5px;color:var(--muted)}
@@ -407,7 +407,7 @@ function viewResumen(js){
   if(last&&last.date){var q=last.date.split('-');recent=(a0-new Date(+q[0],+q[1]-1,+q[2]))/864e5<=3}
   var board=last?'<h2>Última jornada</h2>'+sb(last,{count:1}):'';
   var season='<h2>Temporada</h2><div class="season"><div class="rec"><span class="rn"><span class="w">'+W+'</span>–<span class="l">'+L+'</span>'+(E?'<span style="font-size:.45em;color:var(--muted)"> ('+E+')</span>':'')+'</span><span class="rl">jornadas ganadas<br>y perdidas</span></div><div class="pips">'+form+'</div>'+
-    '<dl class="kv"><div><dt>Parejas</dt><dd><span class="w">'+pw+'</span>–<span class="l">'+pl+'</span></dd></div><div><dt>Sets</dt><dd><span class="w">+'+sw+'</span> <span class="l">−'+sl+'</span></dd></div><div><dt>Juegos</dt><dd><span class="w">+'+gf+'</span> <span class="l">−'+ga+'</span></dd></div></dl></div>';
+    '<dl class="kv"><div><dt>Sets</dt><dd><span class="w">+'+sw+'</span> <span class="l">−'+sl+'</span></dd></div><div><dt>Juegos</dt><dd><span class="w">+'+gf+'</span> <span class="l">−'+ga+'</span></dd></div></dl></div>';
   return waitActa(js)+(recent?board+viewNext(js):viewNext(js)+board)+season}
 function viewJornadas(js){
   if(!js.length)return empty('Sin jornadas todavía','Aún no hay partidos cargados.');
