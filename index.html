@@ -163,7 +163,7 @@ function nameKey(p){var a=[p.p1,p.p2].sort(function(x,y){return x.localeCompare(
 function empty(t,s){return'<div class="empty"><b>'+esc(t)+'</b>'+esc(s)+'</div>'}
 function badge(r){return'<span class="badge '+r+'">'+(r==='g'?'Victoria':r==='p'?'Derrota':'Empate')+'</span>'}
 function pip(r,t){return'<span class="pip '+r+'">'+(t||(r==='g'?'G':r==='p'?'P':'–'))+'</span>'}
-function calRows(list){return list.map(function(c){return'<div class="pr"><span class="n">'+c[0]+'</span><div class="names">'+(c[3]?'Salas '+team+' – '+esc(c[2]):esc(c[2])+' – Salas '+team)+'<small style="display:block;color:var(--muted)">'+(c[3]?'En casa':'Fuera')+'</small></div><span class="sets">'+esc(c[1])+'</span></div>'}).join('')}
+function calRows(list){return list.map(function(c){return'<div class="pr cal '+(c[3]?'home':'away')+'"><span class="n">'+c[0]+'</span><div class="names">'+(c[3]?'Salas '+team+' – '+esc(c[2]):esc(c[2])+' – Salas '+team)+'<small style="display:block;margin-top:5px"><span class="ha '+(c[3]?'h':'a')+'" style="margin:0">'+(c[3]?'🏠 CASA':'✈ FUERA')+'</span></small></div><span class="sets">'+esc(c[1])+'</span></div>'}).join('')}
 function calPending(js){var done={};js.forEach(function(d){if(jstats(d).played)done[d.jornada]=1});return((SALAS_CAL[team]||[]).filter(function(c){return!done[c[0]]&&c[3]!==2&&!c[4]}))}
 function viewCal(js,all){var l=calPending(js);if(!l.length)return'';if(!all)l=l.slice(0,3);
   return'<h2>'+(all?'Calendario · jornadas pendientes':'Próximos partidos')+'</h2><div class="card">'+calRows(l)+'<div class="note">Según el calendario oficial de la Federación. Día y hora exactos: por confirmar con el rival.</div></div>'}
