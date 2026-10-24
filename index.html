@@ -210,7 +210,7 @@ function viewJornadas(js){
   return js.slice().reverse().map(function(d){var s=jstats(d),h='';var pairs=(d.pairs||[]).slice().sort(function(a,b){return a.n-b.n});var pend=false;
     h+='<div class="card" style="margin-top:12px"><div class="jhead"><div><small>Jornada '+d.jornada+' · '+esc(fdate(d.date))+' · '+(d.home?'En casa':'Fuera')+'</small><b>'+(d.home?'Salas '+team+' – '+esc(d.rival):esc(d.rival)+' – Salas '+team)+'</b></div><div class="right"><div class="score">'+(d.home?s.w+'–'+s.l:s.l+'–'+s.w)+'</div>'+(s.played?badge(s.res):'')+'</div></div>';
     pairs.forEach(function(p){var ps=pairStats(p);if(p.pending)pend=true;
-      h+='<div class="pr"><span class="n">'+p.n+'</span><div class="names">'+esc(p.p1)+' / '+esc(p.p2)+ptsLabel(p)+'</div><span class="sets">'+(p.sets||[]).map(function(x){return x[0]+'-'+x[1]}).join('  ')+(p.pending?' *':'')+'</span>'+(ps.played?pip(ps.won?'g':'p').replace('class="pip','class="pip flag').replace('pip flag','pip'):'<span></span>')+'</div>'});
+      h+='<div class="pr"><span class="n">'+p.n+'</span><div class="names">'+pairNames(p)+'</div><span class="sets">'+(p.sets||[]).map(function(x){return x[0]+'-'+x[1]}).join('  ')+(p.pending?' *':'')+'</span>'+(ps.played?pip(ps.won?'g':'p').replace('class="pip','class="pip flag').replace('pip flag','pip'):'<span></span>')+'</div>'});
     h+='<div class="note">Sets: nuestros – rival, de cada set.'+(pend?' * Dato por confirmar.':'')+' Juegos '+s.gf+'–'+s.ga+'.</div></div>';return h}).join('')}
 function viewParejas(js){
   var m={};js.forEach(function(d){(d.pairs||[]).forEach(function(p){var s=pairStats(p);if(!s.played)return;var k=nameKey(p);var o=m[k]||(m[k]={k:k,pj:0,g:0,sw:0,sl:0,gf:0,ga:0});o.pj++;if(s.won)o.g++;o.sw+=s.sw;o.sl+=s.sl;o.gf+=s.gf;o.ga+=s.ga})});
@@ -246,6 +246,7 @@ function saveAlign(){try{localStorage.setItem('salas.align2',JSON.stringify(ALIG
 function pts(n){var q=(SALAS_POINTS[team]||{})[n];return q==null?null:q}
 function roster(){var o=SALAS_POINTS[team]||{};return Object.keys(o).sort(function(a,b){return o[b]-o[a]||a.localeCompare(b,'es')})}
 function ptsLabel(p){var a=pts(p.p1),b=pts(p.p2);return a==null||b==null?'':' <small style="color:var(--muted)">· '+(a+b)+' pts</small>'}
+function pairNames(p){var a=pts(p.p1),b=pts(p.p2),f=function(n,q){return esc(n)+(q==null?'':' <small style="color:var(--muted)">'+q+'</small>')};return f(p.p1,a)+' / '+f(p.p2,b)+(a==null||b==null?'':'<small style="display:block;color:var(--muted);margin-top:2px">Total <b style="color:var(--fg)">'+(a+b)+'</b> pts</small>')}
 function parts(a){if(!a.length)return[[]];var f=a[0],out=[];for(var i=1;i<a.length;i++){var rest=a.slice(1,i).concat(a.slice(i+1));parts(rest).forEach(function(r){out.push([[f,a[i]]].concat(r))})}return out}
 function options(sel){return parts(sel).map(function(o){var pr=o.map(function(x){return{a:x[0],b:x[1],s:(pts(x[0])||0)+(pts(x[1])||0)}}).sort(function(x,y){return y.s-x.s});
   var tie=pr.some(function(x,i){return i&&x.s===pr[i-1].s});return{pr:pr,tie:tie,spread:pr[0].s-pr[pr.length-1].s}})}
