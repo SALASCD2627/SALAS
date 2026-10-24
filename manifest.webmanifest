@@ -1,7 +1,7 @@
 {
- "name": "Salas C y D",
- "short_name": "Salas C y D",
- "description": "Seguimiento del C.D. Salas C y D: jornadas, jugadores, alineaciones y calendario.",
+ "name": "Salas",
+ "short_name": "Salas",
+ "description": "Seguimiento de los equipos del C.D. Salas: jornadas, jugadores, clasificación y calendario.",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
