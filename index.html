@@ -226,7 +226,7 @@ function viewClub(){var keep=team,T=['A','B','C','D','F'],h='',tw=0,tl=0,pw=0,pl
   team=keep;top.sort(function(a,b){return b[1]-a[1]});
   var tiles='<div class="tiles"><div class="tile"><small>Jornadas</small><b><span style="color:var(--lime-text)">'+tw+'</span> – <span style="color:var(--loss)">'+tl+'</span></b></div><div class="tile"><small>Parejas</small><b><span style="color:var(--lime-text)">'+pw+'</span> – <span style="color:var(--loss)">'+pl+'</span></b></div></div>';
   var tp='<h2>Mejores jugadores del club</h2><div class="card">'+top.slice(0,5).map(function(x,i){return'<div class="slot"><div><b>'+(i+1)+' · '+esc(x[0])+'</b><small style="display:block;color:var(--muted);font-size:12px;margin-top:2px">Salas '+x[2]+'</small></div><span class="rec">'+x[1]+'</span></div>'}).join('')+'</div>';
-  return'<h2>Balance del club</h2>'+tiles+'<h2>Equipos</h2>'+h.replace(/^<button class="tm"/,'<button class="tm" style="margin-top:0"')+tp}
+  return'<h2>Resumen última jornada · Club</h2>'+h.replace(/^<button class="tm"/,'<button class="tm" style="margin-top:0"')}
 function viewResumen(js){
   if(!js.length)return waitActa(js)+viewNext(js)+empty('Sin jornadas cargadas todavía','Cuando se cargue la primera jornada aparecerá aquí.');
   var W=0,L=0,E=0,pw=0,pl=0,sw=0,sl=0,gf=0,ga=0,form='';
