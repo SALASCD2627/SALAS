@@ -201,8 +201,8 @@ function viewResumen(js){
     '<div class="tile"><small>Sets</small><b><span style="color:var(--lime-text)">+'+sw+'</span> <span style="color:var(--loss)">−'+sl+'</span></b></div>'+
     '<div class="tile"><small>Juegos</small><b><span style="color:var(--lime-text)">+'+gf+'</span> <span style="color:var(--loss)">−'+ga+'</span></b></div>'+
     '<div class="tile"><small>Jornadas ganadas</small><b>'+pct(W,n)+'%</b><em>'+W+' de '+n+'</em></div></div>';
-  h+='<h2>Resultados por puesto</h2><div class="card">';
-  for(var k=1;k<=5;k++){var pips='',g=0,tt=0,lastp=null;js.forEach(function(d){(d.pairs||[]).forEach(function(p){if(p.n!==k)return;var s=pairStats(p);if(!s.played)return;tt++;lastp=p;if(s.won)g++;pips+=pip(s.won?'g':'p','J'+d.jornada)})});
+  h+='<h2>Resultados última jornada</h2><div class="card">';
+  for(var k=1;k<=5;k++){var pips='',g=0,tt=0,lastp=null;(last?[last]:[]).forEach(function(d){(d.pairs||[]).forEach(function(p){if(p.n!==k)return;var s=pairStats(p);if(!s.played)return;tt++;lastp=p;if(s.won)g++;pips+=pip(s.won?'g':'p','J'+d.jornada)})});
     h+='<div class="slot"><div><b>Pareja '+k+'</b>'+(lastp?'<small style="display:block;color:var(--muted);font-size:12px;margin-top:2px">'+esc(lastp.p1)+' / '+esc(lastp.p2)+'</small>':'')+'</div><div class="pips">'+(pips||pip('e'))+'</div><span class="rec">'+g+'–'+(tt-g)+'</span></div>'}
   h+='</div>';return viewNext(js)+h}
 function viewJornadas(js){
