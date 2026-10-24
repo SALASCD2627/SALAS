@@ -227,10 +227,16 @@ function spark(h){var W=300,H=70,P=14,v=h.map(function(x){return x[1]}),mn=Math.
 function playerCard(n,js){var h='<div style="padding:4px 4px 14px"><div class="note" style="margin:6px 0 4px;font-weight:700;color:var(--fg)">Puntos de la federación</div>';
   var hist=(SALAS_HIST[team]||{})[n]||[],cur2=(SALAS_POINTS[team]||{})[n];
   if(hist.length>=2)h+=spark(hist.slice(-8));else h+='<div class="note" style="margin:0">'+(cur2==null?'Sin datos':cur2+' pts desde el '+esc((hist[0]||['24 oct'])[0])+'. Aún no ha cambiado.')+'</div>';
-  h+='<div class="note" style="margin:12px 0 4px;font-weight:700;color:var(--fg)">Partidos jugados</div>';var any=false;
-  js.forEach(function(d){(d.pairs||[]).forEach(function(p){if(p.p1!==n&&p.p2!==n)return;var ps=pairStats(p);if(!ps.played)return;any=true;var par=p.p1===n?p.p2:p.p1;
-   h+='<div class="pr"><span class="n">'+p.n+'</span><div class="names">con '+esc(par)+'<small style="display:block;color:var(--muted)">J'+d.jornada+' · '+(d.home?'🏠 Casa':'✈ Fuera')+' · '+esc(d.rival)+'</small></div><span class="sets">'+(p.sets||[]).map(function(x){return x[0]+'-'+x[1]}).join('  ')+'</span>'+pip(ps.won?'g':'p')+'</div>'})});
-  if(!any)h+='<div class="note" style="margin:0">Aún no ha jugado.</div>';
+  var rows=[];js.forEach(function(d){(d.pairs||[]).forEach(function(p){if(p.p1!==n&&p.p2!==n)return;var ps=pairStats(p);if(!ps.played)return;var k=p.p1===n?0:1;rows.push({d:d,p:p,ps:ps,b:p.pts&&p.pts[k]!=null?p.pts[k]:null})})});
+  rows.forEach(function(r,k){var nx=k<rows.length-1?rows[k+1].b:cur2;r.dl=(r.b==null||nx==null)?null:nx-r.b;r.last=k===rows.length-1});
+  var up=0,dn=0,has=false;rows.forEach(function(r){if(r.dl==null)return;has=true;if(r.dl>0)up+=r.dl;else dn+=-r.dl});
+  if(hist.length&&cur2!=null)h+='<div class="note" style="margin:8px 0 0">Empezó con <b style="color:var(--fg)">'+hist[0][1]+'</b> ('+esc(hist[0][0])+') · hoy <b style="color:var(--fg)">'+cur2+'</b></div>';
+  if(has)h+='<div class="note" style="margin:4px 0 0">Por partidos: <b style="color:var(--lime-text)">+'+up+'</b> <b style="color:var(--loss)">−'+dn+'</b> · neto <b style="color:var(--fg)">'+(up-dn>0?'+':up-dn<0?'−':'')+Math.abs(up-dn)+'</b></div>';
+  h+='<div class="note" style="margin:12px 0 4px;font-weight:700;color:var(--fg)">Partidos jugados</div>';
+  rows.forEach(function(r){var d=r.d,p=r.p,par=p.p1===n?p.p2:p.p1;
+   var dl=r.dl==null?'':(r.dl===0&&r.last?'<span style="color:var(--muted)"> · puntos aún sin actualizar</span>':' · <b style="color:'+(r.dl>0?'var(--lime-text)':r.dl<0?'var(--loss)':'var(--muted)')+'">'+(r.dl>0?'+':r.dl<0?'−':'')+Math.abs(r.dl)+' pts</b>');
+   h+='<div class="pr"><span class="n">'+p.n+'</span><div class="names">con '+esc(par)+'<small style="display:block;color:var(--muted)">J'+d.jornada+' · '+(d.home?'🏠 Casa':'✈ Fuera')+' · '+esc(d.rival)+'</small><small style="display:block;color:var(--muted)">'+(r.b==null?'':'Tenía '+r.b+' pts')+dl+'</small></div><span class="sets">'+(p.sets||[]).map(function(x){return x[0]+'-'+x[1]}).join('  ')+'</span>'+pip(r.ps.won?'g':'p')+'</div>'});
+  if(!rows.length)h+='<div class="note" style="margin:0">Aún no ha jugado.</div>';
   return h+'</div>'}
 function viewJugadores(js){
   var m={};js.forEach(function(d){(d.pairs||[]).forEach(function(p){var s=pairStats(p);if(!s.played)return;[p.p1,p.p2].forEach(function(n){var o=m[n]||(m[n]={n:n,pj:0,g:0,gf:0,ga:0,h:0,f:0});o.pj++;if(d.home)o.h++;else o.f++;if(s.won)o.g++;o.gf+=s.gf;o.ga+=s.ga})})});
