@@ -1,5 +1,5 @@
 # Envia una notificacion al movil de quien se haya apuntado a un equipo.
-# Se lanza al cambiar el archivo aviso.json. Necesita los secretos ONESIGNAL_APP_ID y ONESIGNAL_REST_KEY.
+# Se lanza al cambiar el archivo aviso.json. Necesita el secreto ONESIGNAL_REST_KEY (el App ID es publico y va aqui).
 name: Aviso a los equipos
 on:
   push:
@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Enviar con OneSignal
         env:
-          APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          APP_ID: d6fcadb2-a54b-487e-9f5e-c41b4604c39a
           REST_KEY: ${{ secrets.ONESIGNAL_REST_KEY }}
         run: |
-          if [ -z "$APP_ID" ] || [ -z "$REST_KEY" ]; then echo "Faltan los secretos de OneSignal"; exit 1; fi
+          if [ -z "$APP_ID" ] || [ -z "$REST_KEY" ]; then echo "Falta el secreto ONESIGNAL_REST_KEY"; exit 1; fi
           jq -e '.equipos|length>0' aviso.json >/dev/null || { echo "Sin equipos"; exit 0; }
           BODY=$(jq -c --arg app "$APP_ID" '{
             app_id:$app, target_channel:"push",
