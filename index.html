@@ -2,6 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="build" content="f511d92242">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -595,4 +596,5 @@ function apply(t){var r=document.documentElement;if(t==='auto')r.removeAttribute
 apply(get());if(B)B.addEventListener('click',function(){var t=M[(M.indexOf(get())+1)%3];try{localStorage.setItem('salas.theme',t)}catch(e){}apply(t)})})();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+<script>(function(){var B=document.querySelector('meta[name=build]');B=B&&B.content;if(!B)return;var busy=0;function chk(){if(busy)return;busy=1;fetch('./?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="build" content="(\w+)"/);if(m&&m[1]!==B)location.reload();else busy=0}).catch(function(){busy=0})}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')chk()});window.addEventListener('online',chk);window.addEventListener('pageshow',chk);setInterval(chk,300000)})()</script>
 </body></html>
