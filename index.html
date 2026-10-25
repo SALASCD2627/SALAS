@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="761014df97">
+<meta name="build" content="788bb64d2f">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -477,7 +477,7 @@ function viewClub(){var keep=team,T=['A','B','C','D','F'],h='';
     (wa?'<div class="tm-row"><div><small>Jornada '+wa[0]+'</small><b>'+esc(wa[2])+'</b></div><div class="tm-side"><span class="wait"><i class="i i-w"></i>Acta pendiente</span>'+ven(wa[3])+'</div></div>':'')+
     (nm?'<div class="tm-row"><div><small>Próximo, '+esc(nm[1])+'</small><b>'+esc(nm[2])+'</b></div><div class="tm-side">'+ven(nm[3])+'</div></div>':'')+'</button>'});
   team=keep;
-  return ig('K')+wa()+'<h2>Resumen última jornada del club</h2>'+h.replace(/^<button class="tm"/,'<button class="tm" style="margin-top:0"')}
+  return'<h2 style="margin-top:20px">Resumen última jornada del club</h2>'+h.replace(/^<button class="tm"/,'<button class="tm" style="margin-top:0"')+ig('K')+wa()}
 function viewResumen(js){
   if(!js.length)return waitActa(js)+viewNext(js)+empty('Sin jornadas cargadas todavía','Cuando se cargue la primera jornada aparecerá aquí.')+ig(team);
   var W=0,L=0,E=0,pw=0,pl=0,sw=0,sl=0,gf=0,ga=0,form='';
