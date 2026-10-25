@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="e9e4b7d039">
+<meta name="build" content="adad66e394">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -324,6 +324,34 @@ footer.foot{border-top:0;color:#6d745d}
 #splash.out{opacity:0;visibility:hidden}
 #splash img{width:96px;height:96px;border-radius:50%;animation:sp .9s ease both}
 @keyframes sp{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
+/* ===== LIMPIO (antes: app/salas_antes_limpio.html) y legible (1 bordes, 2 un solo acento, 3 contraste) ===== */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--muted:#c3c8b1;--line:#22261a;--surface:#171a10}}
+:root[data-theme="dark"]{--muted:#c3c8b1;--line:#22261a;--surface:#171a10}
+:root:not([data-theme="light"]) .sb-pair .st{color:#8d9478}
+:root:not([data-theme="light"]) .sb-pair .st.t.w{color:var(--fg)}
+:root:not([data-theme="light"]) .sb-pair .st.u.w{color:var(--lime-text)}
+:root:not([data-theme="light"]) .cj{color:#8d9478}
+:root:not([data-theme="light"]) .cr.home .cj{color:var(--lime-text)}
+:root:not([data-theme="light"]) footer.foot{color:#8d9478}
+/* 1 · menos bordes, más aire */
+.tm,.board,.card,.cr,.rc,.kv>div,.tile,.howto{border-color:transparent!important}
+.cr.rest{border-color:var(--line)!important}
+.tm-row,.sb-pair,.sb-foot,.row,.slot,.pr{border-top-color:rgba(255,255,255,.055)}
+:root[data-theme="light"] .tm-row,:root[data-theme="light"] .sb-pair,:root[data-theme="light"] .sb-foot,:root[data-theme="light"] .row{border-top-color:rgba(0,0,0,.07)}
+.tm{margin-top:14px;padding:18px 16px}
+.tm-row{margin-top:15px;padding-top:15px}
+.cl{gap:14px}
+.seg.wide{border-color:transparent;background:var(--surface)}
+/* 2 · un solo color de acento: lima para lo importante */
+.ig{border:0;background:var(--surface)}
+.ig small,.ig .chev{color:var(--muted)}
+.sb-pair .pn,.pip.p,.badge.p,.dif.d{background:var(--surface2);color:var(--muted)}
+.sb-pair.win .pn{background:var(--lime);color:var(--lime-ink)}
+.dif.m{background:var(--surface2);color:var(--muted)}
+.wait{border-color:var(--line)}
+/* 3 · texto secundario legible */
+.tm-n small,.tm-row small,.brand span,.sb-meta,.sb-foot,.kv dt,.rec .rl,.cm,.pend,.note,.th span,.tnote,.eqe{font-size:13.5px}
+.note{font-size:13px}
 </style>
 </head>
 <body>
