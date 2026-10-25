@@ -437,7 +437,7 @@ function viewClub(){var keep=team,T=['A','B','C','D','F'],h='';
     var R=SALAS_RANK[t]||{cat:'',t:[]},has=R.t.some(function(x){return x.length>1}),pos=-1;R.t.forEach(function(x,i){if(x[0]==='Salas '+t)pos=i});
     var nm=nextMatch(),wa=(SALAS_CAL[t]||[]).filter(function(c){return c[4]&&!pl2.some(function(d){return d.jornada===c[0]})})[0];
     var cat=R.cat?R.cat.charAt(0).toUpperCase()+R.cat.slice(1):'';
-    h+='<button class="tm" data-act="team" data-t="'+t+'"><div class="tm-top"><span class="tm-l">'+t+'</span><div class="tm-n"><b>Salas '+t+'</b><small>'+esc(cat)+(has&&pos>=0?', puesto '+(pos+1)+'º':'')+'</small></div><div class="tm-r">'+(form||'')+'</div></div>'+
+    h+='<button class="tm" data-act="team" data-t="'+t+'"><div class="tm-top">'+crest(null,46)+'<div class="tm-n"><b>Salas '+t+'</b><small>'+esc(cat)+(has&&pos>=0?', puesto '+(pos+1)+'º':'')+'</small></div><div class="tm-r">'+(form||'')+'</div></div>'+
     (last?'<div class="tm-row"><div><small>Última, jornada '+last.jornada+'</small><b>'+esc(last.rival)+'</b></div><div class="tm-side"><span class="tm-res '+jstats(last).res+'">'+jstats(last).w+'–'+jstats(last).l+'</span>'+ven(last.home)+'</div></div>':'')+
     (wa?'<div class="tm-row"><div><small>Jornada '+wa[0]+'</small><b>'+esc(wa[2])+'</b></div><div class="tm-side"><span class="wait"><i class="i i-w"></i>Acta pendiente</span>'+ven(wa[3])+'</div></div>':'')+
     (nm?'<div class="tm-row"><div><small>Próximo, '+esc(nm[1])+'</small><b>'+esc(nm[2])+'</b></div><div class="tm-side">'+ven(nm[3])+'</div></div>':'')+'</button>'});
