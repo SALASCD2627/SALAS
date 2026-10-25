@@ -207,6 +207,9 @@ footer.foot{border-top:0;color:#6d745d}
 .eqg{display:flex;align-items:baseline;gap:8px;padding:6px 0;font-size:13px}.eqj{width:24px;color:var(--muted);font-weight:700;font-size:12px}.eqr{flex:1;min-width:0}.eqr small{display:block;color:var(--muted);font-size:11.5px}.eqs{font-weight:800;font-variant-numeric:tabular-nums}.eql{width:58px;text-align:right;font-size:12px;font-weight:600}
 .eqs.g,.eql.g{color:var(--lime-text)}.eqs.p,.eql.p{color:var(--loss)}.eqs.e,.eql.e{color:var(--amber)}
 .eqe{padding:8px 0;color:var(--muted);font-size:13px}
+.ig{display:flex;align-items:center;gap:14px;margin:18px 0 0;padding:14px 16px;border:1.5px solid var(--lime);border-radius:18px;color:var(--fg);text-decoration:none;background:linear-gradient(135deg,rgba(198,217,0,.20),rgba(198,217,0,.06));box-shadow:0 0 0 4px rgba(198,217,0,.07)}
+.ig svg{width:44px;height:44px;flex:none;padding:9px;box-sizing:border-box;border-radius:14px;background:var(--lime);color:var(--lime-ink,#0a0a0a)}.ig span{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.ig small{color:var(--lime-text);font-size:12px;font-weight:600;letter-spacing:.02em}.ig b{font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis}.ig .chev{font-style:normal;color:var(--lime-text);font-size:24px}
+.ig:active{transform:scale(.99)}
 .dm small{color:var(--muted);font-size:12.5px}
 .act{white-space:nowrap}.act .sd{overflow:hidden;text-overflow:ellipsis;max-width:130px;color:var(--muted);font-weight:400;margin-left:7px}
 .act{display:inline-flex;align-items:center;font:inherit;font-size:12.5px;font-weight:600;border:1px solid #333a24;background:transparent;color:var(--fg);border-radius:99px;padding:6px 12px;margin:10px 8px 0 0;cursor:pointer;text-decoration:none}
@@ -409,6 +412,8 @@ function sb(d,o){o=o||{};var s=jstats(d),pairs=(d.pairs||[]).slice().sort(functi
 function waitActa(js){var done={};js.forEach(function(d){if(jstats(d).played)done[d.jornada]=1});
   var l=(SALAS_CAL[team]||[]).filter(function(c){return c[4]&&!done[c[0]]&&c[3]!==2});if(!l.length)return'';
   return'<h2>Esperando el acta</h2><div class="cl">'+l.map(function(c){return crow(c,null,1)}).join('')+'</div><div class="note">El partido ya se ha jugado. Cuando la Federación suba el acta, aparecerán aquí las parejas y los sets.</div>'}
+var SALAS_IG={K:'centrodeportivosalas',A:'padelsalasa',B:'padelsalasb',C:'padelsalas_c.d',D:'padelsalas_c.d',F:'padelsalasfem'};
+function ig(t){var u=SALAS_IG[t];if(!u)return'';var lab=t==='K'?'Instagram del club':(t==='C'||t==='D')?'Instagram de Salas C y D':'Instagram de Salas '+t;return'<a class="ig" target="_blank" rel="noopener" href="https://www.instagram.com/'+encodeURIComponent(u)+'/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg><span><small>'+lab+'</small><b>@'+esc(u)+'</b></span><i class="chev">›</i></a>'}
 function viewClub(){var keep=team,T=['A','B','C','D','F'],h='';
   T.forEach(function(t){team=t;var js=mine(),pl2=js.filter(function(d){return jstats(d).played}),last=pl2[pl2.length-1],form='';
     pl2.forEach(function(d){form+=pip(jstats(d).res,'J'+d.jornada)});
@@ -420,9 +425,9 @@ function viewClub(){var keep=team,T=['A','B','C','D','F'],h='';
     (wa?'<div class="tm-row"><div><small>Jornada '+wa[0]+'</small><b>'+esc(wa[2])+'</b></div><div class="tm-side"><span class="wait"><i class="i i-w"></i>Acta pendiente</span>'+ven(wa[3])+'</div></div>':'')+
     (nm?'<div class="tm-row"><div><small>Próximo, '+esc(nm[1])+'</small><b>'+esc(nm[2])+'</b></div><div class="tm-side">'+ven(nm[3])+'</div></div>':'')+'</button>'});
   team=keep;
-  return'<h2>Resumen última jornada del club</h2>'+h.replace(/^<button class="tm"/,'<button class="tm" style="margin-top:0"')}
+  return ig('K')+'<h2>Resumen última jornada del club</h2>'+h.replace(/^<button class="tm"/,'<button class="tm" style="margin-top:0"')}
 function viewResumen(js){
-  if(!js.length)return waitActa(js)+viewNext(js)+empty('Sin jornadas cargadas todavía','Cuando se cargue la primera jornada aparecerá aquí.');
+  if(!js.length)return waitActa(js)+viewNext(js)+empty('Sin jornadas cargadas todavía','Cuando se cargue la primera jornada aparecerá aquí.')+ig(team);
   var W=0,L=0,E=0,pw=0,pl=0,sw=0,sl=0,gf=0,ga=0,form='';
   js.forEach(function(d){var s=jstats(d);if(!s.played)return;if(s.res==='g')W++;else if(s.res==='p')L++;else E++;pw+=s.w;pl+=s.l;sw+=s.sw;sl+=s.sl;gf+=s.gf;ga+=s.ga;form+=pip(s.res,'J'+d.jornada)});
   var last=js.filter(function(d){return jstats(d).played}).pop(),n=W+L+E,t=new Date(),a0=new Date(t.getFullYear(),t.getMonth(),t.getDate()),recent=false;
@@ -430,7 +435,7 @@ function viewResumen(js){
   var board=last?'<h2>Última jornada</h2>'+sb(last,{count:1}):'';
   var season='<h2>Temporada</h2><div class="season"><div class="rec"><span class="rn"><span class="w">'+W+'</span>–<span class="l">'+L+'</span>'+(E?'<span style="font-size:.45em;color:var(--muted)"> ('+E+')</span>':'')+'</span><span class="rl">jornadas ganadas<br>y perdidas</span></div><div class="pips">'+form+'</div>'+
     '<dl class="kv"><div><dt>Sets</dt><dd><span class="w">+'+sw+'</span> <span class="l">−'+sl+'</span></dd></div><div><dt>Juegos</dt><dd><span class="w">+'+gf+'</span> <span class="l">−'+ga+'</span></dd></div></dl></div>';
-  return waitActa(js)+(recent?board+viewNext(js):viewNext(js)+board)+season}
+  return waitActa(js)+(recent?board+viewNext(js):viewNext(js)+board)+season+ig(team)}
 function viewJornadas(js){
   if(!js.length)return empty('Sin jornadas todavía','Aún no hay partidos cargados.');
   return'<div class="note" style="margin-top:14px">Toca una pareja para ver los puntos de cada jugador antes del partido.</div>'+js.slice().reverse().map(function(d){return sb(d)}).join('')}
