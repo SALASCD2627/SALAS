@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="adad66e394">
+<meta name="build" content="761014df97">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -325,8 +325,9 @@ footer.foot{border-top:0;color:#6d745d}
 #splash img{width:96px;height:96px;border-radius:50%;animation:sp .9s ease both}
 @keyframes sp{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
 /* ===== LIMPIO (antes: app/salas_antes_limpio.html) y legible (1 bordes, 2 un solo acento, 3 contraste) ===== */
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--muted:#c3c8b1;--line:#22261a;--surface:#171a10}}
-:root[data-theme="dark"]{--muted:#c3c8b1;--line:#22261a;--surface:#171a10}
+@media (prefers-color-scheme: dark){html:root:root:root:not([data-theme="light"]){--muted:#c3c8b1;--bg:#0c0e08;--surface:#343b29;--surface2:#414a34;--hdr:rgba(12,14,8,.92);--navbg:rgba(52,59,41,.95);--tkbg:#343b29}}
+html:root:root:root[data-theme="dark"]{--muted:#c3c8b1;--bg:#0c0e08;--surface:#343b29;--surface2:#414a34;--hdr:rgba(12,14,8,.92);--navbg:rgba(52,59,41,.95);--tkbg:#343b29}
+html:root:root:root:not([data-theme="light"]) .tm,html:root:root:root:not([data-theme="light"]) .board,html:root:root:root:not([data-theme="light"]) .cr,html:root:root:root:not([data-theme="light"]) .rc,html:root:root:root:not([data-theme="light"]) .kv>div,html:root:root:root:not([data-theme="light"]) .ig,html:root:root:root:not([data-theme="light"]) .hg{box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
 :root:not([data-theme="light"]) .sb-pair .st{color:#8d9478}
 :root:not([data-theme="light"]) .sb-pair .st.t.w{color:var(--fg)}
 :root:not([data-theme="light"]) .sb-pair .st.u.w{color:var(--lime-text)}
