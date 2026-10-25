@@ -11,6 +11,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta charset="utf-8">
 <title>Salas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -283,6 +284,16 @@ footer.foot{border-top:0;color:#6d745d}
 .cres{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:1}
 .cres.g{color:var(--lime-text)}.cres.p{color:var(--loss)}.cres.e{color:var(--fg)}
 .after{margin-top:0}
+/* tarjetas (bocadillos) */
+.rc,.kv>div{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px}
+.rc{display:grid;gap:14px}
+.kv{border-top:0;gap:12px}
+.kv>div,.kv>div:first-child{padding:14px 16px;border-left:1px solid var(--line)}
+.cl{margin-top:2px;display:grid;gap:12px}
+.cr{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px}
+.cl>.cr:first-child{border-top:1px solid var(--line)}
+.cr.done{background:var(--surface)}
+.cr.rest{background:transparent;border-style:dashed}
 /* club */
 .tm{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:12px;cursor:pointer;box-shadow:none;transition:border-color .2s}
 .tm:hover{border-color:#3a4220}
@@ -438,7 +449,7 @@ function viewResumen(js){
   var last=js.filter(function(d){return jstats(d).played}).pop(),n=W+L+E,t=new Date(),a0=new Date(t.getFullYear(),t.getMonth(),t.getDate()),recent=false;
   if(last&&last.date){var q=last.date.split('-');recent=(a0-new Date(+q[0],+q[1]-1,+q[2]))/864e5<=3}
   var board=last?'<h2>Última jornada</h2>'+sb(last,{count:1}):'';
-  var season='<h2>Temporada</h2><div class="season"><div class="rec"><span class="rn"><span class="w">'+W+'</span>–<span class="l">'+L+'</span>'+(E?'<span style="font-size:.45em;color:var(--muted)"> ('+E+')</span>':'')+'</span><span class="rl">jornadas ganadas<br>y perdidas</span></div><div class="pips">'+form+'</div>'+
+  var season='<h2>Temporada</h2><div class="season"><div class="rc"><div class="rec"><span class="rn"><span class="w">'+W+'</span>–<span class="l">'+L+'</span>'+(E?'<span style="font-size:.45em;color:var(--muted)"> ('+E+')</span>':'')+'</span><span class="rl">jornadas ganadas<br>y perdidas</span></div><div class="pips">'+form+'</div></div>'+
     '<dl class="kv"><div><dt>Sets</dt><dd><span class="w">+'+sw+'</span> <span class="l">−'+sl+'</span></dd></div><div><dt>Juegos</dt><dd><span class="w">+'+gf+'</span> <span class="l">−'+ga+'</span></dd></div></dl></div>';
   return waitActa(js)+(recent?board+viewNext(js):viewNext(js)+board)+season+ig(team)}
 function viewJornadas(js){
