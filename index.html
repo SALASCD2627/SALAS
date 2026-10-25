@@ -573,7 +573,7 @@ function render(){
   if(team==='K'){app.innerHTML='<div class="view">'+viewClub()+'</div>';return}
   if(tab==='resumen')h=viewResumen(js);else if(tab==='jornadas')h=viewJornadas(js);else if(tab==='parejas')h=viewParejas(js);else if(tab==='calendario')h=viewCalendario(js);else if(tab==='liga')h=viewLiga();else h=viewJugadores(js);
   app.innerHTML='<div class="view">'+h+'</div>'}
-function setTeam(t){team=t;try{localStorage.setItem('salas.team',t)}catch(e){}render()}
+function setTeam(t){var fromClub=team==='K'&&t!=='K';team=t;if(fromClub)tab='resumen';try{localStorage.setItem('salas.team',t);if(fromClub)localStorage.setItem('salas.tab','resumen')}catch(e){}render();if(fromClub)window.scrollTo(0,0)}
 function setTab(t){tab=t;try{localStorage.setItem('salas.tab',t)}catch(e){}render();window.scrollTo(0,0)}
 document.getElementById('tK').onclick=function(){setTeam('K')};document.getElementById('tC').onclick=function(){setTeam('C')};document.getElementById('tD').onclick=function(){setTeam('D')};document.getElementById('tB').onclick=function(){setTeam('B')};document.getElementById('tA').onclick=function(){setTeam('A')};document.getElementById('tF').onclick=function(){setTeam('F')};
 [].forEach.call(document.querySelectorAll('nav.tabs button'),function(b){b.onclick=function(){setTab(b.dataset.tab)}});
