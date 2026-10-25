@@ -354,7 +354,7 @@ footer.foot{border-top:0;color:#6d745d}
 <script>
 (function(){
 var app=document.getElementById('app'),docs=[],team='C',tab='resumen',loaded=false,dbFail=false;
-try{team=localStorage.getItem('salas.team')||'K';tab=localStorage.getItem('salas.tab')||'resumen';if(tab==='alinear')tab='resumen'}catch(e){}
+try{team='K';tab=localStorage.getItem('salas.tab')||'resumen';if(tab==='alinear')tab='resumen'}catch(e){}
 if('KABCDF'.indexOf(team)<0)team='K';
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 var DM=['dom','lun','mar','mié','jue','vie','sáb'],MM=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
