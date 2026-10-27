@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="afb023b059">
+<meta name="build" content="910a4016cb">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -368,6 +368,32 @@ html:root:root:root:not([data-theme="light"]) .tm,html:root:root:root:not([data-
 .wait{border-color:var(--line)}
 /* 3 · texto secundario legible */
 .tm-n small,.tm-row small,.brand span,.sb-meta,.sb-foot,.kv dt,.rec .rl,.cm,.pend,.note,.th span,.tnote,.eqe{font-size:13.5px}
+@media (prefers-reduced-motion:no-preference){
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:none;opacity:1}}
+.view.enter>*,.view.enter>.cl2>*,.view.enter>.podio>*,.view.enter>.pres>*{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*60ms)}
+.view.enter>:nth-child(1),.view.enter>.cl2>:nth-child(1),.view.enter>.podio>:nth-child(1),.view.enter>.pres>:nth-child(1){--i:0}
+.view.enter>:nth-child(2),.view.enter>.cl2>:nth-child(2),.view.enter>.podio>:nth-child(2),.view.enter>.pres>:nth-child(2){--i:1}
+.view.enter>:nth-child(3),.view.enter>.cl2>:nth-child(3),.view.enter>.podio>:nth-child(3),.view.enter>.pres>:nth-child(3){--i:2}
+.view.enter>:nth-child(4),.view.enter>.cl2>:nth-child(4),.view.enter>.podio>:nth-child(4),.view.enter>.pres>:nth-child(4){--i:3}
+.view.enter>:nth-child(5),.view.enter>.cl2>:nth-child(5),.view.enter>.podio>:nth-child(5),.view.enter>.pres>:nth-child(5){--i:4}
+.view.enter>:nth-child(6),.view.enter>.cl2>:nth-child(6),.view.enter>.podio>:nth-child(6),.view.enter>.pres>:nth-child(6){--i:5}
+.view.enter>:nth-child(7),.view.enter>.cl2>:nth-child(7),.view.enter>.podio>:nth-child(7),.view.enter>.pres>:nth-child(7){--i:6}
+.view.enter>:nth-child(8),.view.enter>.cl2>:nth-child(8),.view.enter>.podio>:nth-child(8),.view.enter>.pres>:nth-child(8){--i:7}
+.view.enter>:nth-child(9),.view.enter>.cl2>:nth-child(9),.view.enter>.podio>:nth-child(9),.view.enter>.pres>:nth-child(9){--i:8}
+.view.enter>:nth-child(10),.view.enter>.cl2>:nth-child(10),.view.enter>.podio>:nth-child(10),.view.enter>.pres>:nth-child(10){--i:9}
+.view.enter>:nth-child(11),.view.enter>.cl2>:nth-child(11),.view.enter>.podio>:nth-child(11),.view.enter>.pres>:nth-child(11){--i:10}
+.view.enter>:nth-child(12),.view.enter>.cl2>:nth-child(12),.view.enter>.podio>:nth-child(12),.view.enter>.pres>:nth-child(12){--i:11}
+.view.enter .pkb i,.view.enter .wb i,.view.enter .meter i,.view.enter .tk-box .meter i{transform-origin:left;animation:grow .8s cubic-bezier(.2,.7,.2,1) .3s both}
+.view.enter .cwr.res,.view.enter .pkr{animation:pop .45s cubic-bezier(.2,.8,.3,1.2) .35s both}
+.cwd:not([hidden]),.eqp:not([hidden]),.eqd:not([hidden]),.top10:not([hidden]){animation:rise .3s cubic-bezier(.2,.7,.2,1) both}
+.cw,.pod,.eqrow,.sb-pair,.eqg.tap,.row[data-act]{transition:transform .12s ease,background-color .2s ease}
+.cw:active,.pod:active,.eqrow:active,.sb-pair:active,.eqg.tap:active,.row[data-act]:active{transform:scale(.985)}
+.act,.jch button,.seg.wide button,nav.tabs button{transition:transform .12s ease,background-color .2s ease,color .2s ease}
+.act:active,.jch button:active,nav.tabs button:active{transform:scale(.94)}
+}
+
 .cl2{display:flex;flex-direction:column;gap:10px}
 .cwg{border-radius:16px;background:var(--surface);overflow:hidden}
 .cw{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -776,6 +802,7 @@ app.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if
  saveAlign();render()});
 app.addEventListener('change',function(e){var b=e.target;if(b.dataset&&b.dataset.act==='hide'){ALIGN[team].hide=b.checked?1:0;ALIGN[team].shown=10;saveAlign();render()}
   else if(b.dataset&&b.dataset.act==='side'){ALIGN[team].side=b.checked?1:0;ALIGN[team].shown=10;saveAlign();render()}});
+function vcls(){var k=team+'|'+tab,f=k!==window._vk;window._vk=k;return f?'view enter':'view'}
 function render(){
   var sub=document.getElementById('sub');document.body.classList.toggle('club',team==='K');document.getElementById('tK').setAttribute('aria-pressed',team==='K');
   document.getElementById('tC').setAttribute('aria-pressed',team==='C');document.getElementById('tD').setAttribute('aria-pressed',team==='D');document.getElementById('tB').setAttribute('aria-pressed',team==='B');document.getElementById('tA').setAttribute('aria-pressed',team==='A');document.getElementById('tF').setAttribute('aria-pressed',team==='F');var _jt=document.querySelector('[data-tab=jugadores]');if(_jt&&_jt.lastChild)_jt.lastChild.textContent=team==='F'?'Jugadoras':'Jugadores';
@@ -784,9 +811,9 @@ function render(){
   if(!loaded){return}
   var js=mine(),h='';
   sub.textContent=team==='K'?'Los cinco equipos, temporada 2026/27':((SALAS_RANK[team]||{}).cat||('Salas '+team)).replace(/^./,function(c){return c.toUpperCase()});
-  if(team==='K'){app.innerHTML='<div class="view">'+viewClub()+'</div>';return}
+  if(team==='K'){app.innerHTML='<div class="'+vcls()+'">'+viewClub()+'</div>';return}
   if(tab==='resumen')h=viewResumen(js);else if(tab==='jornadas')h=viewJornadas(js);else if(tab==='parejas')h=viewParejas(js);else if(tab==='calendario')h=viewCalendario(js);else if(tab==='liga')h=viewLiga();else h=viewJugadores(js);
-  app.innerHTML='<div class="view">'+h+'</div>'}
+  app.innerHTML='<div class="'+vcls()+'">'+h+'</div>'}
 function setTeam(t){var fromClub=team==='K'&&t!=='K';team=t;if(fromClub)tab='resumen';try{localStorage.setItem('salas.team',t);if(fromClub)localStorage.setItem('salas.tab','resumen')}catch(e){}render();if(fromClub)window.scrollTo(0,0)}
 function setTab(t){tab=t;try{localStorage.setItem('salas.tab',t)}catch(e){}render();window.scrollTo(0,0)}
 document.getElementById('tK').onclick=function(){setTeam('K')};document.getElementById('tC').onclick=function(){setTeam('C')};document.getElementById('tD').onclick=function(){setTeam('D')};document.getElementById('tB').onclick=function(){setTeam('B')};document.getElementById('tA').onclick=function(){setTeam('A')};document.getElementById('tF').onclick=function(){setTeam('F')};
