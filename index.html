@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="14eeb47742">
+<meta name="build" content="bf14b43ffe">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -375,6 +375,11 @@ html:root:root:root:not([data-theme="light"]) .tm,html:root:root:root:not([data-
 .cdr b{font-family:var(--font-display);font-weight:800;font-size:54px;line-height:.95;font-variant-numeric:tabular-nums;color:var(--lime-text)}
 .cdr small{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .cdr i{font-style:normal;font-family:var(--font-display);font-weight:700;font-size:44px;line-height:.95;color:var(--muted)}
+.cd{position:relative}
+.cd:not(.end)::before{content:"";position:absolute;inset:0;border-radius:16px;padding:2px;background:conic-gradient(var(--lime) var(--p,100%),color-mix(in srgb,var(--fg) 10%,transparent) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none}
+@keyframes cdfl{from{transform:translateY(-8px);opacity:.15}to{transform:none;opacity:1}}
+.cdr b.fl{animation:cdfl .28s ease-out}
+@media (prefers-reduced-motion:reduce){.cdr b.fl{animation:none}}
 .cd.end b{font-family:var(--font-display);font-size:26px;color:var(--lime-text);font-weight:800;text-transform:uppercase}
 
 header.top{top:calc(env(safe-area-inset-top,0px) - 94px);padding:20px 16px 12px;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--lime) 11%,var(--bg)),var(--hdr) 92%)}
@@ -522,8 +527,9 @@ function viewLiga(){var R=SALAS_RANK[team];if(!R)return empty('Clasificación pe
   h+='</div>'+ligaNext()+'<div class="note">'+(has?'Datos de la Federación Cántabra de Pádel. ':'La Federación todavía no ha publicado la clasificación de este grupo. Se rellenará aquí cuando lo haga. ')+'Toca un equipo para ver sus partidos y, dentro, cada pareja con sus sets.</div>';return h}
 function when(f){var m=/^(\d{1,2})\s*(?:[–-]\s*\d{1,2}\s+)?([a-z]{3})/i.exec(String(f||'').replace(/\s+/g,' ').trim());if(!m)return'';var mi=MM.indexOf(m[2].toLowerCase());if(mi<0)return'';var y=mi<6?2027:2026,t=new Date(),a=new Date(t.getFullYear(),t.getMonth(),t.getDate()),b=new Date(y,mi,+m[1]),d=Math.round((b-a)/864e5);if(d<-2||d>120)return'';return'<span class="when">'+(d>1?'En '+d+' días':d===1?'Mañana':d===0?'Hoy':'Este fin de semana')+'</span>'}
 function cdParts(ms){var s=Math.max(0,Math.floor(ms/1000)),p=function(n){return(n<10?'0':'')+n};return[p(Math.floor(s/3600)),p(Math.floor(s%3600/60)),p(s%60)]}
-function cdHTML(iso){var dt=new Date(iso),ms=dt-new Date();if(isNaN(dt))return'';if(ms<=0)return'<div class="cd end" data-cd="'+iso+'"><b>'+(ms>-3*36e5?'Partido en juego':'Pendiente del resultado')+'</b></div>';var q=cdParts(ms);return'<div class="cd" data-cd="'+iso+'"><span class="cdl">Falta para el partido</span><div class="cdr"><div><b>'+q[0]+'</b><small>horas</small></div><i>:</i><div><b>'+q[1]+'</b><small>min</small></div><i>:</i><div><b>'+q[2]+'</b><small>seg</small></div></div></div>'}
-function cdTick(){[].forEach.call(document.querySelectorAll('.cd[data-cd]'),function(e){var iso=e.getAttribute('data-cd'),ms=new Date(iso)-new Date();if(ms<=0&&!e.classList.contains('end')){e.outerHTML=cdHTML(iso);return}if(ms<=0)return;var b=e.querySelectorAll('.cdr b'),q=cdParts(ms);if(b.length===3)for(var i=0;i<3;i++)if(b[i].textContent!==q[i])b[i].textContent=q[i]})}
+function cdP(ms){return Math.round(Math.min(1,ms/6048e5)*1000)/10}
+function cdHTML(iso){var dt=new Date(iso),ms=dt-new Date();if(isNaN(dt))return'';if(ms<=0)return'<div class="cd end" data-cd="'+iso+'"><b>'+(ms>-3*36e5?'Partido en juego':'Pendiente del resultado')+'</b></div>';var q=cdParts(ms);return'<div class="cd" data-cd="'+iso+'" style="--p:'+cdP(ms)+'%"><span class="cdl">Falta para el partido</span><div class="cdr"><div><b>'+q[0]+'</b><small>horas</small></div><i>:</i><div><b>'+q[1]+'</b><small>min</small></div><i>:</i><div><b>'+q[2]+'</b><small>seg</small></div></div></div>'}
+function cdTick(){[].forEach.call(document.querySelectorAll('.cd[data-cd]'),function(e){var iso=e.getAttribute('data-cd'),ms=new Date(iso)-new Date();if(ms<=0&&!e.classList.contains('end')){e.outerHTML=cdHTML(iso);return}if(ms<=0)return;var b=e.querySelectorAll('.cdr b'),q=cdParts(ms);e.style.setProperty('--p',cdP(ms)+'%');if(b.length===3)for(var i=0;i<3;i++)if(b[i].textContent!==q[i]){b[i].textContent=q[i];b[i].classList.remove('fl');void b[i].offsetWidth;b[i].classList.add('fl')}})}
 setInterval(cdTick,1000);
 function tkBody(nm,t,R,pos,has){var d=nm[5]||{},hasD=!!d.d,w='',wh='';
   if(hasD){var p=d.d.split('T'),q=p[0].split('-'),dt=new Date(+q[0],+q[1]-1,+q[2]);w=DM[dt.getDay()]+' '+dt.getDate()+' '+MM[dt.getMonth()]+(p[1]?' <b>'+p[1]+'</b>':'');wh=p[1]?'':when(dt.getDate()+' '+MM[dt.getMonth()])}else wh=when(nm[1]);
