@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="042f8d492f">
+<meta name="build" content="14eeb47742">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -368,6 +368,15 @@ html:root:root:root:not([data-theme="light"]) .tm,html:root:root:root:not([data-
 .wait{border-color:var(--line)}
 /* 3 · texto secundario legible */
 .tm-n small,.tm-row small,.brand span,.sb-meta,.sb-foot,.kv dt,.rec .rl,.cm,.pend,.note,.th span,.tnote,.eqe{font-size:13.5px}
+.cd{margin-top:18px;padding:14px 16px 16px;border-radius:16px;background:color-mix(in srgb,var(--fg) 5%,transparent);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:10px}
+.cdl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cdr{display:flex;align-items:flex-start;justify-content:center;gap:8px}
+.cdr>div{display:flex;flex-direction:column;align-items:center;min-width:64px}
+.cdr b{font-family:var(--font-display);font-weight:800;font-size:54px;line-height:.95;font-variant-numeric:tabular-nums;color:var(--lime-text)}
+.cdr small{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.cdr i{font-style:normal;font-family:var(--font-display);font-weight:700;font-size:44px;line-height:.95;color:var(--muted)}
+.cd.end b{font-family:var(--font-display);font-size:26px;color:var(--lime-text);font-weight:800;text-transform:uppercase}
+
 header.top{top:calc(env(safe-area-inset-top,0px) - 94px);padding:20px 16px 12px;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--lime) 11%,var(--bg)),var(--hdr) 92%)}
 header.top::before{content:"";position:absolute;right:-70px;top:-80px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,var(--wash),transparent 65%);pointer-events:none}
 header.top>*{position:relative}
@@ -512,10 +521,15 @@ function viewLiga(){var R=SALAS_RANK[team];if(!R)return empty('Clasificación pe
     h+='<div data-act="eq" class="eqrow" style="display:grid;'+g+'border-top:1px solid var(--line);cursor:pointer;'+(me?'background:var(--lime);color:var(--lime-ink);font-weight:700':'')+'"><span style="color:'+(me?'inherit':'var(--muted)')+'">'+(has?i+1:'–')+'</span><span style="min-width:0">'+esc(x[0])+'<i class="chev">›</i></span><span style="text-align:center">'+v(1)+'</span><span style="text-align:center;font-size:12.5px">'+(t?t.s:'–')+'</span><span style="text-align:center;font-size:12px">'+(t?t.j:'–')+'</span><span style="text-align:center;font-weight:800">'+v(4)+'</span></div><div class="eqp" hidden>'+eqPanel(x[0])+'</div>'});
   h+='</div>'+ligaNext()+'<div class="note">'+(has?'Datos de la Federación Cántabra de Pádel. ':'La Federación todavía no ha publicado la clasificación de este grupo. Se rellenará aquí cuando lo haga. ')+'Toca un equipo para ver sus partidos y, dentro, cada pareja con sus sets.</div>';return h}
 function when(f){var m=/^(\d{1,2})\s*(?:[–-]\s*\d{1,2}\s+)?([a-z]{3})/i.exec(String(f||'').replace(/\s+/g,' ').trim());if(!m)return'';var mi=MM.indexOf(m[2].toLowerCase());if(mi<0)return'';var y=mi<6?2027:2026,t=new Date(),a=new Date(t.getFullYear(),t.getMonth(),t.getDate()),b=new Date(y,mi,+m[1]),d=Math.round((b-a)/864e5);if(d<-2||d>120)return'';return'<span class="when">'+(d>1?'En '+d+' días':d===1?'Mañana':d===0?'Hoy':'Este fin de semana')+'</span>'}
+function cdParts(ms){var s=Math.max(0,Math.floor(ms/1000)),p=function(n){return(n<10?'0':'')+n};return[p(Math.floor(s/3600)),p(Math.floor(s%3600/60)),p(s%60)]}
+function cdHTML(iso){var dt=new Date(iso),ms=dt-new Date();if(isNaN(dt))return'';if(ms<=0)return'<div class="cd end" data-cd="'+iso+'"><b>'+(ms>-3*36e5?'Partido en juego':'Pendiente del resultado')+'</b></div>';var q=cdParts(ms);return'<div class="cd" data-cd="'+iso+'"><span class="cdl">Falta para el partido</span><div class="cdr"><div><b>'+q[0]+'</b><small>horas</small></div><i>:</i><div><b>'+q[1]+'</b><small>min</small></div><i>:</i><div><b>'+q[2]+'</b><small>seg</small></div></div></div>'}
+function cdTick(){[].forEach.call(document.querySelectorAll('.cd[data-cd]'),function(e){var iso=e.getAttribute('data-cd'),ms=new Date(iso)-new Date();if(ms<=0&&!e.classList.contains('end')){e.outerHTML=cdHTML(iso);return}if(ms<=0)return;var b=e.querySelectorAll('.cdr b'),q=cdParts(ms);if(b.length===3)for(var i=0;i<3;i++)if(b[i].textContent!==q[i])b[i].textContent=q[i]})}
+setInterval(cdTick,1000);
 function tkBody(nm,t,R,pos,has){var d=nm[5]||{},hasD=!!d.d,w='',wh='';
-  if(hasD){var p=d.d.split('T'),q=p[0].split('-'),dt=new Date(+q[0],+q[1]-1,+q[2]);w=DM[dt.getDay()]+' '+dt.getDate()+' '+MM[dt.getMonth()]+(p[1]?' <b>'+p[1]+'</b>':'');wh=when(dt.getDate()+' '+MM[dt.getMonth()])}else wh=when(nm[1]);
+  if(hasD){var p=d.d.split('T'),q=p[0].split('-'),dt=new Date(+q[0],+q[1]-1,+q[2]);w=DM[dt.getDay()]+' '+dt.getDate()+' '+MM[dt.getMonth()]+(p[1]?' <b>'+p[1]+'</b>':'');wh=p[1]?'':when(dt.getDate()+' '+MM[dt.getMonth()])}else wh=when(nm[1]);
   var o='<div class="tk-sep"></div><div class="tk-when"><div class="tk-wl">'+ven(nm[3])+(hasD?'':'<span class="tk-rng">'+esc(nm[1])+'</span>')+'</div>'+wh+'</div>';
   if(w)o+='<div class="dbig">'+w+'</div>';
+  if(hasD&&d.d.indexOf('T')>0)o+=cdHTML(d.d);
   if(d.p)o+='<div class="tk-pl"><i class="i i-pin"></i> '+esc(d.p)+'</div>';
   else if(!hasD)o+='<div class="tk-pl">Día y hora por confirmar con el rival.</div>';
   var F=SALAS_FUERZA[t],b1='',b2='';
