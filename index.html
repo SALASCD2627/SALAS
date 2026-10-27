@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="3e6f08b603">
+<meta name="build" content="b313de39bf">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -368,6 +368,30 @@ html:root:root:root:not([data-theme="light"]) .tm,html:root:root:root:not([data-
 .wait{border-color:var(--line)}
 /* 3 · texto secundario legible */
 .tm-n small,.tm-row small,.brand span,.sb-meta,.sb-foot,.kv dt,.rec .rl,.cm,.pend,.note,.th span,.tnote,.eqe{font-size:13.5px}
+.pres{display:flex;gap:10px;margin-bottom:12px}
+.pres>div{flex:1;min-width:0;padding:12px;border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:2px}
+.pres small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pres b{font-family:var(--font-display);font-size:24px;line-height:1.1}
+.pk{padding:16px;display:flex;flex-direction:column;gap:14px;margin-bottom:12px}
+.pkh{display:flex;align-items:center;gap:12px}
+.pav{display:flex;flex:none}
+.pav i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--font-display);font-weight:800;font-size:20px;background:var(--surface2);color:var(--fg);border:2px solid var(--surface)}
+.pav i+i{margin-left:-12px}
+.pav i.w{background:var(--lime);color:var(--lime-ink)}
+.pav i.l{background:var(--loss-bg);color:var(--loss)}
+.pkn{flex:1;min-width:0;display:flex;flex-direction:column}
+.pkn b{font-size:16px;font-weight:600;line-height:1.2;overflow-wrap:anywhere}
+.pkn small{font-size:12px;color:var(--muted)}
+.pkr{font-family:var(--font-display);font-weight:800;font-size:34px;line-height:1}
+.pkr.w{color:var(--lime-text)}.pkr.l{color:var(--loss)}
+.pkb{height:6px;border-radius:3px;background:var(--loss-bg);overflow:hidden}
+.pkb i{display:block;height:6px;border-radius:3px}
+.pkb i.w{background:var(--lime)}.pkb i.l{background:var(--loss)}
+.pkd{display:flex;gap:8px}
+.pkd>div{flex:1;padding:8px 4px;border-radius:10px;background:var(--surface2);display:flex;flex-direction:column;align-items:center}
+.pkd b{font-size:16px;font-variant-numeric:tabular-nums}
+.pkd small{font-size:11px;color:var(--muted)}
+
 .podio{display:flex;align-items:flex-end;gap:10px;margin:2px 0 4px}
 .pod{flex:1;min-width:0;border-radius:16px;background:var(--surface);border-top:3px solid var(--line);padding:12px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
 .pd1{min-height:176px}.pd2{min-height:150px}.pd3{min-height:132px}
@@ -571,8 +595,10 @@ function viewParejas(js){
   var a=Object.keys(m).map(function(k){return m[k]});
   if(!a.length)return empty('Sin parejas todavía','Las parejas aparecen cuando hay partidos jugados.');
   a.sort(function(x,y){return y.pj-x.pj||pct(y.g,y.pj)-pct(x.g,x.pj)||(y.gf-y.ga)-(x.gf-x.ga)});
-  return'<h2>Cuántas veces han jugado juntas</h2>'+a.map(function(o){var p=pct(o.g,o.pj);
-    return'<div class="card pcard"><div class="top"><b>'+esc(o.k)+'</b><span class="pct'+(p<50?' l':'')+'">'+p+'%</span></div><div class="bar'+(p<50?' l':'')+'"><i style="width:'+Math.max(p,3)+'%"></i></div><div class="sub"><span>'+o.pj+(o.pj===1?' partido':' partidos')+'</span><span>'+o.g+' ganados · '+(o.pj-o.g)+' perdidos</span><span>Sets '+o.sw+'–'+o.sl+'</span><span>Juegos '+o.gf+'–'+o.ga+'</span></div></div>'}).join('')}
+  var nj=js.filter(function(d){return jstats(d).played}).length,full=a.filter(function(o){return o.g===o.pj}).length,ini=function(s){return esc((s||'?').trim().charAt(0).toUpperCase())};
+  var res='<div class="pres">'+[['Parejas',a.length],['Al 100%',full],['Jornadas',nj]].map(function(c){return'<div><small>'+c[0]+'</small><b>'+c[1]+'</b></div>'}).join('')+'</div>';
+  return'<h2>Parejas</h2><div class="note" style="margin:-6px 0 12px">Cuántas veces han jugado juntos y cómo les ha ido</div>'+res+a.map(function(o){var p=pct(o.g,o.pj),w=p>=50,n=o.k.split(' / ');
+    return'<div class="card pk"><div class="pkh"><span class="pav"><i class="'+(w?'w':'l')+'">'+ini(n[0])+'</i><i>'+ini(n[1])+'</i></span><div class="pkn"><b>'+esc(o.k)+'</b><small>'+o.pj+(o.pj===1?' partido jugado':' partidos jugados')+'</small></div><span class="pkr '+(w?'w':'l')+'">'+o.g+'–'+(o.pj-o.g)+'</span></div><div class="pkb"><i class="'+(w?'w':'l')+'" style="width:'+Math.max(p,3)+'%"></i></div><div class="pkd"><div><b>'+p+'%</b><small>Victorias</small></div><div><b>'+o.sw+'–'+o.sl+'</b><small>Sets</small></div><div><b>'+o.gf+'–'+o.ga+'</b><small>Juegos</small></div></div></div>'}).join('')}
 function spark(h){var W=300,H=70,P=14,v=h.map(function(x){return x[1]}),mn=Math.min.apply(0,v),mx=Math.max.apply(0,v),rg=mx-mn||1;
   var pt=h.map(function(x,i){return[P+i*(W-2*P)/(h.length-1),H-P-(x[1]-mn)*(H-2*P)/rg]});
   var dots=pt.map(function(q,i){return'<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="3.5" fill="var(--lime)"/><text x="'+q[0].toFixed(1)+'" y="'+(q[1]-7).toFixed(1)+'" text-anchor="middle" font-size="10" fill="var(--fg)">'+h[i][1]+'</text>'}).join('');
