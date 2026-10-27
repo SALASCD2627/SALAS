@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="ad59942df1">
+<meta name="build" content="7cc942decc">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -232,6 +232,20 @@ footer.foot{border-top:0;color:#6d745d}
 .tk-team b{font-family:var(--font-display);font-weight:800;font-size:26px;line-height:1;overflow-wrap:anywhere}
 .tk-net{justify-self:center;background:none;padding:6px 0;font-size:12px;font-weight:600;color:var(--muted)}
 .dbig{font-family:var(--font-display);font-size:28px;line-height:1.1;margin-top:10px;color:var(--fg);text-transform:uppercase;letter-spacing:.01em}.dbig b{color:var(--lime-text);font-weight:400}.cr .dbig{font-size:22px;margin-top:8px}
+.tk-sep{height:1px;background:var(--line);margin:2px 0 18px}
+.tk-vs{margin:22px -6px 20px!important}
+.tk-when{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tk-wl{display:flex;align-items:center;gap:10px}
+.tk-rng{font-size:14px}
+.ticket .dbig{font-size:34px;margin-top:16px}
+.tk-pl{margin-top:8px;font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.tk-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.tk-box{background:color-mix(in srgb,var(--fg) 5%,transparent);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.tk-box small{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tk-box .dl,.tk-box .dl2{font-family:var(--font-display);font-size:20px;line-height:1.1}
+.tk-box em{font-style:normal;font-size:12.5px;color:var(--muted)}
+.tk-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.ticket .tk-acts .act{margin:0;padding:9px 14px}
 .tk-info{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:14px}
 .ticket .note{margin-top:12px}
 .ticket .act{margin-top:12px}
@@ -416,13 +430,24 @@ function viewLiga(){var R=SALAS_RANK[team];if(!R)return empty('Clasificación pe
     h+='<div data-act="eq" class="eqrow" style="display:grid;'+g+'border-top:1px solid var(--line);cursor:pointer;'+(me?'background:var(--lime);color:var(--lime-ink);font-weight:700':'')+'"><span style="color:'+(me?'inherit':'var(--muted)')+'">'+(has?i+1:'–')+'</span><span style="min-width:0">'+esc(x[0])+'<i class="chev">›</i></span><span style="text-align:center">'+v(1)+'</span><span style="text-align:center">'+v(2)+'</span><span style="text-align:center">'+v(3)+'</span><span style="text-align:center;font-weight:800">'+v(4)+'</span></div><div class="eqp" hidden>'+eqPanel(x[0])+'</div>'});
   h+='</div><div class="note">'+(has?'Datos de la Federación Cántabra de Pádel. ':'La Federación todavía no ha publicado la clasificación de este grupo. Se rellenará aquí cuando lo haga. ')+'Toca un equipo para ver contra quién ha jugado y cómo ha quedado.</div>';return h}
 function when(f){var m=/^(\d{1,2})\s*(?:[–-]\s*\d{1,2}\s+)?([a-z]{3})/i.exec(String(f||'').replace(/\s+/g,' ').trim());if(!m)return'';var mi=MM.indexOf(m[2].toLowerCase());if(mi<0)return'';var y=mi<6?2027:2026,t=new Date(),a=new Date(t.getFullYear(),t.getMonth(),t.getDate()),b=new Date(y,mi,+m[1]),d=Math.round((b-a)/864e5);if(d<-2||d>120)return'';return'<span class="when">'+(d>1?'En '+d+' días':d===1?'Mañana':d===0?'Hoy':'Este fin de semana')+'</span>'}
+function tkBody(nm,t,R,pos,has){var d=nm[5]||{},hasD=!!d.d,w='',wh='';
+  if(hasD){var p=d.d.split('T'),q=p[0].split('-'),dt=new Date(+q[0],+q[1]-1,+q[2]);w=DM[dt.getDay()]+' '+dt.getDate()+' '+MM[dt.getMonth()]+(p[1]?' <b>'+p[1]+'</b>':'');wh=when(dt.getDate()+' '+MM[dt.getMonth()])}else wh=when(nm[1]);
+  var o='<div class="tk-sep"></div><div class="tk-when"><div class="tk-wl">'+ven(nm[3])+(hasD?'':'<span class="tk-rng">'+esc(nm[1])+'</span>')+'</div>'+wh+'</div>';
+  if(w)o+='<div class="dbig">'+w+'</div>';
+  if(d.p)o+='<div class="tk-pl"><i class="i i-pin"></i> '+esc(d.p)+'</div>';
+  else if(!hasD)o+='<div class="tk-pl">Día y hora por confirmar con el rival.</div>';
+  var F=SALAS_FUERZA[t],b1='',b2='';
+  if(F&&F.r[nm[2]]){var v=F.r[nm[2]],qq=v/F.yo,l=qq<=1.2?1:qq<=1.5?2:3;b1='<div class="tk-box dm l'+l+'"><small>Dificultad</small><span class="dl">'+['Asequible','Media','Dura'][l-1]+'</span><span class="meter"><i></i><i></i><i></i></span><em>Rival '+v+' · Nosotros '+F.yo+'</em></div>'}
+  if(has&&pos>=0&&R[pos].length>1)b2='<div class="tk-box"><small>Rival en la liga</small><span class="dl2">Puesto '+(pos+1)+'º</span><em>'+R[pos][4]+' pts · '+R[pos][2]+' G · '+R[pos][3]+' P</em></div>';
+  if(b1||b2)o+='<div class="tk-stats">'+b1+b2+'</div>';
+  var ac=(hasD?'<button class="act" data-act="ics" data-t="'+t+'" data-j="'+nm[0]+'"><i class="i i-cal"></i> Añadir al calendario</button>':'')+(d.p?'<a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.p)+'"><i class="i i-pin"></i> Cómo llegar</a>':'')+gps(nm,t);
+  if(ac)o+='<div class="tk-acts">'+ac+'</div>';
+  return o}
 function viewNext(js){var nm=nextMatch();if(!nm)return'';
   var R=(SALAS_RANK[team]||{t:[]}).t,pos=-1;R.forEach(function(x,i){if(x[0]===nm[2])pos=i});var has=R.some(function(x){return x.length>1});
   var done={};js.forEach(function(d){if(jstats(d).played)done[d.jornada]=1});
   var rest=(SALAS_CAL[team]||[]).filter(function(c){return!done[c[0]]&&c[3]!==2&&!c[4]&&c[0]>nm[0]}).slice(0,2);
-  var h='<section class="ticket"><div class="tk-head"><b>Próximo partido</b><span>Jornada '+nm[0]+'</span></div><div class="tk-vs"><div class="tk-team">'+crest(null,64)+'<b>Salas '+team+'</b></div><span class="tk-net">vs</span><div class="tk-team">'+crest(nm[2],64)+'<b>'+esc(nm[2])+'</b></div></div><div class="tk-info">'+ven(nm[3])+(nm[5]&&nm[5].d?'':'<span>'+esc(nm[1])+'</span>')+when(nm[5]&&nm[5].d?(+nm[5].d.slice(8,10))+' '+MM[+nm[5].d.slice(5,7)-1]:nm[1])+'</div>'+dm(nm)+detail(nm,team)+gps(nm,team);
-  if(has&&pos>=0&&R[pos].length>1)h+='<div class="note">Rival: puesto '+(pos+1)+', '+R[pos][4]+' pts, '+R[pos][2]+' G y '+R[pos][3]+' P</div>';
-  else if(!nm[5])h+='<div class="note">Día y hora por confirmar con el rival.</div>';
+  var h='<section class="ticket"><div class="tk-head"><b>Próximo partido</b><span>Jornada '+nm[0]+'</span></div><div class="tk-vs"><div class="tk-team">'+crest(null,64)+'<b>Salas '+team+'</b></div><span class="tk-net">vs</span><div class="tk-team">'+crest(nm[2],64)+'<b>'+esc(nm[2])+'</b></div></div>'+tkBody(nm,team,R,pos,has);
   h+='</section>';
   if(rest.length)h+='<h2>Después</h2><div class="cl after">'+rest.map(function(c){return crow(c,null)}).join('')+'</div>';
   return h}
