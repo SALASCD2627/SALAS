@@ -2,7 +2,7 @@
 <html lang="es"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="dc170a51a8">
+<meta name="build" content="3e6f08b603">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -368,6 +368,32 @@ html:root:root:root:not([data-theme="light"]) .tm,html:root:root:root:not([data-
 .wait{border-color:var(--line)}
 /* 3 · texto secundario legible */
 .tm-n small,.tm-row small,.brand span,.sb-meta,.sb-foot,.kv dt,.rec .rl,.cm,.pend,.note,.th span,.tnote,.eqe{font-size:13.5px}
+.podio{display:flex;align-items:flex-end;gap:10px;margin:2px 0 4px}
+.pod{flex:1;min-width:0;border-radius:16px;background:var(--surface);border-top:3px solid var(--line);padding:12px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer}
+.pd1{min-height:176px}.pd2{min-height:150px}.pd3{min-height:132px}
+.pn2{font-family:var(--font-display);font-weight:800;font-size:22px;line-height:1;color:var(--muted)}
+.pb{display:flex;flex-direction:column;gap:3px;min-width:0}
+.pb b{font-size:13.5px;font-weight:600;line-height:1.2;overflow-wrap:anywhere}
+.pb em{font-style:normal;font-family:var(--font-display);font-weight:700;font-size:22px;line-height:1.05}
+.pb small{font-size:11px;color:var(--muted);line-height:1.35}
+.wb{display:block;height:4px;border-radius:3px;background:var(--loss-bg);margin-top:6px;overflow:hidden}
+.wb i{display:block;height:4px;border-radius:3px;background:var(--lime)}
+.tk-head{margin:-18px -18px 0;padding:14px 20px;background:var(--surface2);text-transform:uppercase;letter-spacing:.12em;font-size:12px}
+.tk-head b{color:var(--lime-text);font-size:12px;font-weight:600}
+.ticket .dbig{font-size:46px;line-height:.95;margin-top:14px}
+.tk-stats{grid-template-columns:1fr;gap:12px}
+.tk-box{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:16px;gap:10px}
+.tk-box .dl,.tk-box .dl2{font-size:26px}
+.tk-box .meter{order:3;flex:0 0 100%;gap:4px}
+.tk-box .meter i{flex:1;height:8px;border-radius:4px}
+.tk-box em{order:4;flex:0 0 100%;display:block}
+.tk-box.dm.l1 .meter i:nth-child(-n+1){background:var(--lime)}
+.tk-box.dm.l2 .meter i:nth-child(-n+2){background:var(--amber)}
+.tk-box.dm.l3 .meter i{background:var(--loss)}
+.tk-box.dm.l1 .dl{color:var(--lime-text)}.tk-box.dm.l2 .dl{color:var(--amber)}.tk-box.dm.l3 .dl{color:var(--loss)}
+.tk-acts .act:first-child{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+.ticket .tk-acts .act{padding:12px 16px;font-size:13.5px}
+
 .ln{margin:14px 0 4px;padding:16px;border-radius:16px;background:var(--surface2);display:flex;flex-direction:column;gap:6px}
 .lnk{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime-text)}
 .ln b{font-family:var(--font-display);font-size:26px;line-height:1.05}
@@ -576,8 +602,11 @@ function viewJugadores(js){
   var a=Object.keys(m).map(function(k){return m[k]});
   if(!a.length)return empty('Sin jugadores todavía','Los jugadores aparecen cuando hay partidos jugados.');
   var PT=SALAS_POINTS[team]||{};a.sort(function(x,y){return(PT[y.n]||0)-(PT[x.n]||0)||y.pj-x.pj||x.n.localeCompare(y.n,'es')});
-  return'<h2>Balance individual</h2><div class="card tbl"><div class="row h"><span>Jugador</span><span class="c">PJ</span><span class="c" style="color:var(--lime-text);line-height:1.2"><i class="i i-h"></i><br>Casa</span><span class="c" style="color:var(--loss);line-height:1.2"><i class="i i-a"></i>️<br>Fuera</span><span class="c"><span style="color:var(--lime-text)">G</span>–<span style="color:var(--loss)">P</span></span><span class="c">%</span><span class="c">Pts</span></div>'+
-   a.map(function(o,i){return'<div class="row" data-act="pl" data-n="'+esc(o.n)+'" style="cursor:pointer"><span class="nm"><span style="color:var(--muted);font-weight:500">'+(i+1)+'&nbsp;&#8209;</span>&nbsp;'+esc(o.n)+'</span><span class="c">'+o.pj+'</span><span class="c">'+o.h+'</span><span class="c">'+o.f+'</span><span class="c"><span style="color:var(--lime-text);font-weight:700">'+o.g+'</span>–<span style="color:var(--loss);font-weight:700">'+(o.pj-o.g)+'</span></span><span class="c">'+(o.pj?pct(o.g,o.pj)+'%':'–')+'</span><span class="c">'+(function(){var q=(SALAS_POINTS[team]||{})[o.n];return q==null?'–':q})()+'</span></div>'+(openPl===o.n?playerCard(o.n,js):'')}).join('')+'</div><div class="note" style="margin-top:10px">Toca un jugador para ver su ficha. PJ partidos jugados (Casa y Fuera: cuántos en cada sitio) · G–P ganados y perdidos · Pts puntos federativos (Federación Cántabra de Pádel, 24 oct).</div>'}
+  var PTS=SALAS_POINTS[team]||{},pv=function(o){var q=PTS[o.n];return q==null?'–':q},mk=function(o){return'<span class="c"><span style="color:var(--lime-text);font-weight:700">'+o.g+'</span>–<span style="color:var(--loss);font-weight:700">'+(o.pj-o.g)+'</span></span>'},top=a.slice(0,3),rest=a.slice(3),ord=[1,0,2],hh=['pd1','pd2','pd3'];
+  var pod=ord.filter(function(i){return top[i]}).map(function(i){var o=top[i];return'<div class="pod '+hh[i]+'" data-act="pl" data-n="'+esc(o.n)+'"><span class="pn2">'+(i+1)+'</span><div class="pb"><b>'+esc(o.n)+'</b><em>'+pv(o)+' pts</em><small>'+o.g+'–'+(o.pj-o.g)+' · '+(o.pj?pct(o.g,o.pj)+'%':'–')+'<br>Casa '+o.h+' · Fuera '+o.f+'</small></div></div>'}).join('');
+  var ptop=top.filter(function(o){return openPl===o.n}).map(function(o){return playerCard(o.n,js)}).join('');
+  var hd='<div class="row h"><span>Jugador</span><span class="c">PJ</span><span class="c" style="color:var(--lime-text);line-height:1.2"><i class="i i-h"></i><br>Casa</span><span class="c" style="color:var(--loss);line-height:1.2"><i class="i i-a"></i>️<br>Fuera</span><span class="c"><span style="color:var(--lime-text)">G</span>–<span style="color:var(--loss)">P</span></span><span class="c">%</span><span class="c">Pts</span></div>';
+  return'<h2>Jugadores</h2><div class="podio">'+pod+'</div>'+ptop+(rest.length?'<div class="card tbl" style="margin-top:14px">'+hd+rest.map(function(o,i){return'<div class="row" data-act="pl" data-n="'+esc(o.n)+'" style="cursor:pointer"><span class="nm"><span style="color:var(--muted);font-weight:500">'+(i+4)+'&nbsp;&#8209;</span>&nbsp;'+esc(o.n)+(o.pj?'<i class="wb"><i style="width:'+pct(o.g,o.pj)+'%"></i></i>':'')+'</span><span class="c">'+o.pj+'</span><span class="c">'+o.h+'</span><span class="c">'+o.f+'</span>'+mk(o)+'<span class="c">'+(o.pj?pct(o.g,o.pj)+'%':'–')+'</span><span class="c">'+pv(o)+'</span></div>'+(openPl===o.n?playerCard(o.n,js):'')}).join('')+'</div>':'')+'<div class="note" style="margin-top:10px">Toca un jugador para ver su ficha. PJ partidos jugados (Casa y Fuera: cuántos en cada sitio) · G–P ganados y perdidos · Pts puntos federativos (Federación Cántabra de Pádel, 24 oct).</div>'}
 var ALIGN={C:{a:{},s:{},mode:'bal',hide:1,shown:10},D:{a:{},s:{},mode:'bal',hide:1,shown:10},B:{a:{},s:{},mode:'bal',hide:1,shown:10},A:{a:{},s:{},mode:'bal',hide:1,shown:10},F:{a:{},s:{},mode:'bal',hide:1,shown:10}},copyTxt='';
 try{var _s=JSON.parse(localStorage.getItem('salas.align2')||'null');if(_s&&_s.C&&_s.D){ALIGN=_s;if(!ALIGN.B)ALIGN.B={a:{},s:{},mode:'bal',hide:1,shown:10};if(!ALIGN.A)ALIGN.A={a:{},s:{},mode:'bal',hide:1,shown:10};if(!ALIGN.F)ALIGN.F={a:{},s:{},mode:'bal',hide:1,shown:10}}}catch(e){}
 function saveAlign(){try{localStorage.setItem('salas.align2',JSON.stringify(ALIGN))}catch(e){}}
