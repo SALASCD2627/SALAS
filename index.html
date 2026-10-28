@@ -2,7 +2,7 @@
 <html lang="es" data-theme="dark"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="bd39955d71">
+<meta name="build" content="e4f2886be8">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -594,47 +594,107 @@ header.top>*{position:relative}
 
 /* Marcador dentro de la app */
 html.lvopen,html.lvopen body{overflow:hidden}
-.lv{position:fixed;inset:0;z-index:50;background:var(--bg);color:var(--fg);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.lv{--soft:#4a5140;--wash:rgba(198,217,0,.14);--navbg:rgba(52,59,41,.95);position:fixed;inset:0;z-index:50;background:var(--bg);color:var(--fg);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .lv[hidden]{display:none}
+.lv button,.lv input,.lv select{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+.lv button:active:not(:disabled){transform:scale(.97)}
 .lv-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:var(--hdr);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .lv-bar b{font-family:var(--font-display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:.02em}
-.lv-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 14px 0 8px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-weight:600;font-size:15px;cursor:pointer}
+.lv-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 14px 0 8px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:15px;cursor:pointer}
 .lv-back svg{width:20px;height:20px}
-.lv-in{max-width:696px;margin:0 auto;display:flex;flex-direction:column;gap:14px;padding:14px max(16px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.lv-place{font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.1;text-wrap:balance;margin:2px 0 0}
-.lv-date{display:inline-flex;align-items:center;gap:8px;width:fit-content;max-width:100%;min-height:36px;padding:0 14px 0 12px;background:var(--surface);border:1px solid var(--line);border-radius:99px;color:var(--muted);font-weight:600;font-size:14px}
-.lv-date svg{width:18px;height:18px;flex:none}
+.lv-in{max-width:696px;margin:0 auto;display:flex;flex-direction:column;gap:14px;padding:14px max(16px,env(safe-area-inset-right,0px)) calc(104px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lv-place{width:100%;background:transparent;border:0;border-bottom:1px dashed var(--soft);font-family:var(--font-display);font-weight:700;font-size:26px;line-height:1.1;padding:4px 0 6px;border-radius:0}
+.lv-datepill{display:inline-flex;align-items:center;gap:8px;width:fit-content;max-width:100%;min-height:40px;padding:0 14px 0 12px;background:var(--surface);border:1px solid var(--line);border-radius:99px;color:var(--muted)}
+.lv-datepill svg{width:18px;height:18px;flex:none}
+.lv-datepill input{background:transparent;border:0;color:var(--fg);font-weight:600;font-size:16px;min-height:38px;padding:0;min-width:0}
+.lv-match{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px}
+.lv-fl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lv-teams{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.lv-tb{background:transparent;border:1.5px solid transparent;border-radius:16px;padding:8px 0 6px;display:grid;justify-items:center;gap:4px;cursor:pointer;color:var(--muted)}
+.lv-tb b{font-family:var(--font-display);font-weight:800;font-size:18px;line-height:1}
+.lv-tb[aria-pressed="true"]{border-color:var(--lime);background:var(--wash);color:var(--fg)}
+.lv-field{width:100%;min-height:48px;background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:0 12px;color:var(--fg);font-weight:500;font-size:16px}
+.lv-fg{display:grid;gap:6px}
+.lv-fg[hidden]{display:none}
 .lv .board{margin-top:0}
 .lv-state{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--muted)}
 .lv-dot{width:8px;height:8px;border-radius:50%;background:var(--lime)}
-.lv-state.fin .lv-dot{background:var(--lime-text);box-shadow:0 0 0 3px rgba(198,217,0,.14)}
-.lv-state.pend .lv-dot{background:var(--muted)}
+.lv-state.fin .lv-dot{background:var(--lime-text);box-shadow:0 0 0 3px var(--wash)}
+.lv-saved{border:1px solid var(--soft);border-radius:99px;min-height:30px;display:inline-flex;align-items:center;padding:0 12px;font-size:12px;font-weight:600;color:var(--muted)}
 .lv-chips{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:12px 14px 14px;border-top:1px solid var(--line)}
 .lv-chip{border-radius:12px;padding:6px 2px 5px;text-align:center;display:grid;gap:1px;background:var(--surface2);border:1.5px solid transparent}
 .lv-chip i{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
-.lv-chip b{font-family:var(--font-display);font-weight:700;font-size:21px;line-height:1}
+.lv-chip b{font-family:var(--font-display);font-weight:700;font-size:21px;line-height:1;font-variant-numeric:tabular-nums}
 .lv-chip.win{background:var(--lime)}.lv-chip.win i,.lv-chip.win b{color:var(--lime-ink)}
 .lv-chip.loss{background:var(--loss-bg)}.lv-chip.loss i,.lv-chip.loss b{color:var(--loss)}
 .lv-chip.live{background:transparent;border:1.5px dashed var(--lime-text)}.lv-chip.live b{color:var(--lime-text)}
+.lv-pairs{display:flex;flex-direction:column;gap:12px}
 .lv-pair{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px;display:grid;gap:12px}
 .lv-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
 .lv-tag{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:18px;background:var(--surface2);color:var(--muted)}
-.lv-pair.win .lv-tag{background:var(--lime);color:var(--lime-ink)}
-.lv-pair.loss .lv-tag{background:var(--loss-bg);color:var(--loss)}
-.lv-names{font-weight:600;font-size:16px;overflow-wrap:anywhere}
-.lv-names.e{color:var(--muted);font-weight:400}
-.lv-time{font-size:13px;color:var(--muted);font-weight:500}
+.lv-pair.is-win .lv-tag{background:var(--lime);color:var(--lime-ink)}
+.lv-pair.is-loss .lv-tag{background:var(--loss-bg);color:var(--loss)}
+.lv-nc{display:grid;gap:2px;min-width:0}
+.lv-names{min-width:0;width:100%;background:transparent;border:0;border-bottom:1px dashed var(--soft);font-weight:600;font-size:16px;padding:4px 0;text-overflow:ellipsis;border-radius:0}
+.lv-names::placeholder{color:var(--muted);font-weight:400}
+.lv-tbx{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lv-time{background:transparent;border:0;font-size:16px;font-weight:500;letter-spacing:0;color:var(--muted);padding:2px 0;min-height:28px}
 .lv-res{display:grid;gap:4px;justify-items:end}
-.lv-res b{font-family:var(--font-display);font-size:34px;line-height:.9;font-weight:800;font-variant-numeric:tabular-nums}
-.lv-pair.win .lv-res b{color:var(--lime-text)}.lv-pair.loss .lv-res b{color:var(--loss)}
+.lv-res b{font-family:var(--font-display);font-size:36px;line-height:.9;font-weight:800;font-variant-numeric:tabular-nums}
+.lv-pair.is-win .lv-res b{color:var(--lime-text)}.lv-pair.is-loss .lv-res b{color:var(--loss)}
 .lv-pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--surface2);color:var(--muted);white-space:nowrap}
 .lv-pill.win{background:var(--lime);color:var(--lime-ink)}.lv-pill.loss{background:var(--loss-bg);color:var(--loss)}
 .lv-pill.live{background:transparent;border:1.5px dashed var(--lime-text);color:var(--lime-text);padding:1.5px 9px}
-.lv-sets{display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:10px}
-.lv-set{display:inline-flex;align-items:baseline;gap:6px;padding:4px 12px;border-radius:12px;background:var(--surface2);font-family:var(--font-display);font-weight:700;font-size:22px;font-variant-numeric:tabular-nums}
-.lv-set small{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.lv-set.w{color:var(--lime-text)}.lv-set.l{color:var(--loss)}
+.lv-sets{display:grid;gap:6px}
+.lv-set,.lv-setcols{display:grid;grid-template-columns:40px minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center}
+.lv-setcols span{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center}
+.lv-sl{font-size:13px;color:var(--muted);font-weight:500}
+.lv-step{display:grid;grid-template-columns:44px minmax(28px,1fr) 44px;align-items:center;background:var(--surface2);border-radius:14px;overflow:hidden}
+.lv-step button{height:46px;border:0;background:transparent;font-size:24px;font-weight:500;cursor:pointer;color:var(--muted)}
+.lv-step button:active:not(:disabled){background:var(--line);color:var(--fg)}
+.lv-step output{font-family:var(--font-display);font-weight:800;font-size:32px;text-align:center;line-height:1;font-variant-numeric:tabular-nums}
+.lv-set.lw .lv-step.us output,.lv-set.ll .lv-step.th output{color:var(--lime-text)}
+.lv-set.lw .lv-step.th output,.lv-set.ll .lv-step.us output{color:var(--loss)}
+.lv-set.xo{opacity:.36}.lv-set.xo button{cursor:default}
+.lv-quick{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:12px}
+.lv-quick[hidden]{display:none}
+.lv-qh{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.lv-qt{font-family:var(--font-display);font-weight:700;font-size:19px}
+.lv-seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:3px;gap:2px}
+.lv-seg button{border:0;background:transparent;border-radius:11px;min-height:36px;padding:0 14px;font-family:var(--font-display);font-weight:700;font-size:17px;cursor:pointer;color:var(--muted)}
+.lv-seg button[aria-pressed="true"]{background:var(--lime);color:var(--lime-ink)}
+.lv-qc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.lv-qc button{min-height:42px;border-radius:99px;border:1px solid var(--soft);background:transparent;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:18px;padding:0}
+.lv-qc button:active{background:var(--surface2)}
+.lv-pickrow{display:flex}
+.lv-pick{min-height:38px;padding:0 14px;border-radius:99px;border:1px solid var(--soft);background:transparent;cursor:pointer;font-weight:600;font-size:13.5px}
+.lv-pick[aria-expanded="true"]{background:var(--wash);border-color:var(--lime)}
+.lv-roster{display:grid;gap:8px;background:var(--surface2);border-radius:14px;padding:10px 12px}
+.lv-roster[hidden]{display:none}
+.lv-rc{display:flex;flex-wrap:wrap;gap:6px}
+.lv-rc button{min-height:38px;border-radius:99px;border:1px solid var(--soft);background:transparent;padding:0 12px;font-weight:600;font-size:14px;cursor:pointer}
+.lv-rc button.used{opacity:.4}.lv-rc button.sel{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
+.lv-sec{display:grid;gap:10px}
+.lv-sec h2{font-family:var(--font-display);font-weight:700;font-size:24px;line-height:1.1;margin:10px 0 0}
+.lv-mh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.lv-mh h2{margin:0}
+.lv-sync{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;border:1.5px dashed var(--lime-text);color:var(--lime-text)}
+.lv-sync.ok{border-style:solid;background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
+.lv-bubble{background:#1f3a1b;color:var(--fg);border-radius:18px 18px 18px 4px;padding:13px 15px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15.5px;line-height:1.45;user-select:text;border:1px solid var(--line)}
 .lv-hint{font-size:12.5px;color:var(--muted);margin:0;line-height:1.5}
+.lv-opts{display:flex;align-items:center;gap:10px;min-height:44px;font-size:14px}
+.lv-opts input{width:20px;height:20px;accent-color:var(--lime)}
+.lv-reset{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lv-reset[hidden]{display:none}
+.lv-ghost{min-height:44px;padding:0 16px;border-radius:99px;border:1px solid var(--soft);background:transparent;cursor:pointer;font-weight:600;font-size:14px}
+.lv-ghost.danger{color:var(--loss);border-color:rgba(255,125,110,.45)}
+.lv-fbar{position:fixed;z-index:3;margin:0 auto;max-width:696px;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:6px;background:var(--navbg);border:1px solid var(--line);border-radius:22px;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);display:flex;gap:6px}
+.lv-btn{min-height:48px;border-radius:17px;font-weight:600;font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;padding:0 16px;white-space:nowrap}
+.lv-btn.primary{flex:1;background:var(--lime);color:var(--lime-ink);border:0}
+.lv-btn.secondary{border:1px solid var(--soft);background:transparent;width:48px;padding:0}
+.lv-btn:disabled{opacity:.35;cursor:default}
+.lv input:focus-visible,.lv button:focus-visible,.lv select:focus-visible{outline:2px solid var(--lime-text);outline-offset:2px}
+@media (max-width:380px){.lv-qc button{font-size:16px}}
 </style>
 </head>
 <body>
@@ -650,8 +710,9 @@ html.lvopen,html.lvopen body{overflow:hidden}
 <main id="app" aria-live="polite"><div class="sk" aria-hidden="true"><b class="skn"></b><div class="skc"><b class="skh"></b><div class="skr"><div class="skt"><i></i><b></b></div><em></em><div class="skt"><i></i><b></b></div></div><i class="sk1"></i><i class="sk2"></i><i class="sk3"></i></div></div></main>
 <footer class="foot">Se actualiza cada jornada<br>Foto: <a href="https://unsplash.com/photos/3sSbRisCnmE" target="_blank" rel="noopener">Oskar Hagberg</a> en <a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a></footer>
 </div>
-<div id="lv" class="lv" role="dialog" aria-modal="true" aria-label="Marcador" hidden><div class="lv-bar"><button type="button" id="lvback" class="lv-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Volver</button><b>Marcador</b></div><div class="lv-in" id="lvin"></div></div>
+<script>var SALAS_ROSTER={"C":["Rober","José Manuel F.","Jesús","Hugo","Tito","Rubén","Juan","Manuel","Vity","Javi B.","Berto","Óscar","Gilmar","Pedro Luis S.","Francisco G.","Javi S.","José Félix R.","Félix R."],"D":["Fco. Jesús A.","Topi","Víctor","Aarón","Boby","José M.","Anthony","José David","Héctor","Diego","Manuel Á.","José Luis","Kitos","Javi D.","David F.","Daniel","David M.","Jesús P.","Adrián","Fco. Javier P.","Juan José"],"B":["Bruno","Daniel G.","Raúl L.","Rubén G.","Enrique","Gastón","Juan José","Alfonso","Víctor A.","Alberto P.","Tomás","Adrián","Óscar","Víctor M. Á.","Ismael","Daniel M.","Raúl B.","Carlos","Alberto G.","Aquilino"],"A":["Iñigo","Javi S.","Roberto S.","Iván","Borja","Adrián","Sergio","Daniel","Diego","Jorge","Tomás","Fernando","Alfonso","Ricardo","Juan I.","Juan S."],"F":["Elena","Sara","Elsa","Arantxa","Susana","Gloria","Ana Mar","Jara","Ana B.","María","Claudia","Nerea"]};</script>
 <script>var SALAS_LIVE={"place":"Salas \"D\" - Move & Go E","date":"2026-10-31","team":"D","jor":2,"rival":"Move & Go E","pairs":[{"id":"P.5","names":"José David / Héctor","time":"15:00","sets":[[0,0],[0,0],[0,0]]},{"id":"P.4","names":"José M. / Boby","time":"15:00","sets":[[0,0],[0,0],[0,0]]},{"id":"P.1","names":"Topi / Javi D.","time":"16:00","sets":[[0,0],[0,0],[0,0]]},{"id":"P.2","names":"Anthony / Víctor","time":"16:00","sets":[[0,0],[0,0],[0,0]]},{"id":"P.3","names":"Adrián / Kitos","time":"17:00","sets":[[0,0],[0,0],[0,0]]}],"updatedAt":1793175935973};</script>
+<div id="lv" class="lv" role="dialog" aria-modal="true" aria-label="Marcador" hidden><div class="lv-bar"><button type="button" id="lvback" class="lv-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Volver</button><b>Marcador</b></div><div class="lv-in" id="lvin"></div><div class="lv-fbar"><button id="lvundo" class="lv-btn secondary" type="button" aria-label="Deshacer último cambio" disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg></button><button id="lvcopy" class="lv-btn primary" type="button">Copiar mensaje</button></div></div>
 <nav class="tabs" aria-label="Secciones"><div class="in" role="tablist"><span class="ind"></span>
   <button role="tab" data-tab="resumen" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Resumen</button>
   <button role="tab" data-tab="jornadas" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>Jornadas</button>
@@ -965,35 +1026,101 @@ window.addEventListener("resize",place);if(document.fonts&&document.fonts.ready)
 docs=SALAS_DATA;loaded=true;netB();render();requestAnimationFrame(function(){place();requestAnimationFrame(function(){document.body.classList.add("ready")})});
 try{var _si=document.getElementById("splashimg"),_sp=document.getElementById("splash"),_first=true;try{_first=!sessionStorage.getItem("salas.splash");sessionStorage.setItem("salas.splash","1")}catch(e){}_si.src=document.querySelector(".logo").src;if(!_first)_sp.classList.add("q");setTimeout(function(){_sp.classList.add("out");setTimeout(function(){_sp.remove()},600)},_first?1600:450)}catch(e){}
 (function(){
-var L=SALAS_LIVE,ov=document.getElementById('lv'),inn=document.getElementById('lvin'),lnk=document.getElementById('live'),back=document.getElementById('lvback'),root=document.documentElement;
-if(!L||!ov||!inn||!lnk)return;
-var DAYS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],MONTHS=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var ov=document.getElementById('lv'),inn=document.getElementById('lvin'),lnk=document.getElementById('live'),back=document.getElementById('lvback'),root=document.documentElement,undoB=document.getElementById('lvundo'),copyB=document.getElementById('lvcopy');
+if(!SALAS_LIVE||!ov||!inn||!lnk)return;
+var KEY='salas.marcador.v1',AWK='salas.marcador.awake',TEAMS=['A','B','C','D','F'],QUICK=[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]];
+var DAYS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var S=JSON.parse(JSON.stringify(SALAS_LIVE)),hist=[],winSide=['us','us','us','us','us'],lastCopied=null,pickOpen=-1,pickSel=[],built=false,wl=null,copyTimer;
+try{var sv=JSON.parse(localStorage.getItem(KEY)||'null');if(sv&&sv.pairs&&sv.pairs.length===5&&(sv.updatedAt||0)>=(SALAS_LIVE.updatedAt||0))S=sv}catch(e){}
+function $(s){return inn.querySelector(s)}
+function withTeam(t,f){var t0=team;team=t;try{return f()}finally{team=t0}}
+function calEntry(t,j){var c=SALAS_CAL[t]||[];for(var i=0;i<c.length;i++)if(c[i][0]===j)return c[i];return null}
+function defaultJor(t){var c=SALAS_CAL[t]||[],i;for(i=0;i<c.length;i++)if(c[i][2]&&c[i][5]&&c[i][5].d)return c[i][0];for(i=0;i<c.length;i++)if(c[i][2])return c[i][0];return 0}
+function autoPlace(){return'Salas "'+S.team+'" - '+(S.rival||'Rival')}
 function setWinner(a,b){var m=Math.max(a,b);if(m>=6&&(Math.abs(a-b)>=2||m===7))return a>b?1:-1;return 0}
-function ev(p){var us=0,th=0,stt=[],open=true;for(var k=0;k<3;k++){var a=p.sets[k][0],b=p.sets[k][1];if(us===2||th===2||!open){stt.push('off');continue}var w=setWinner(a,b);if(w===1){us++;stt.push('won')}else if(w===-1){th++;stt.push('lost')}else{stt.push(a||b?'live':'idle');open=false}}
- var dec=us===2||th===2,started=us+th>0||p.sets.some(function(s){return s[0]||s[1]});return{us:us,th:th,st:stt,dec:dec,kind:dec?(us===2?'win':'loss'):(started?'live':'idle')}}
+function ev(p){var us=0,th=0,st=[],open=true,started=false;for(var k=0;k<3;k++){var a=p.sets[k][0],b=p.sets[k][1];if(us===2||th===2||!open){st.push('off');continue}var w=setWinner(a,b);if(w===1){us++;st.push('won');started=true}else if(w===-1){th++;st.push('lost');started=true}else{st.push(a||b?'live':'idle');open=false;if(a||b)started=true}}
+ var dec=us===2||th===2,act=-1;for(var j=0;j<3;j++){if(st[j]==='idle'||st[j]==='live'){act=j;break}}
+ return{us:us,th:th,st:st,dec:dec,kind:dec?(us===2?'win':'loss'):(started?'live':'idle'),act:act}}
+function totals(){var w=0,l=0,all=true;S.pairs.forEach(function(p){var e=ev(p);if(e.dec){if(e.us===2)w++;else l++}else all=false});return{w:w,l:l,fin:all}}
 function fmtLong(iso){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');if(!m)return'';var d=new Date(+m[1],+m[2]-1,+m[3]);return DAYS[d.getDay()]+' '+d.getDate()+' de '+MONTHS[d.getMonth()]}
-function render(){
- var t0=team;team=L.team;var me=crest(null,52),rv=crest(L.rival,52);team=t0;
- var ev0=L.pairs.map(ev),w=0,l=0,fin=true,any=false;ev0.forEach(function(e){if(e.dec){if(e.us===2)w++;else l++}else fin=false;if(e.kind!=='idle')any=true});
- var cls=fin?'fin':(any?'':'pend'),lab=fin?'Resultado final':(any?'En juego · resultado parcial':'Pendiente de empezar');
- var h='<h1 class="lv-place">'+esc(L.place||'')+'</h1>';
- if(L.date)h+='<span class="lv-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'+esc(fmtLong(L.date))+'</span>';
- h+='<section class="board" aria-live="polite"><div class="sb-top"><div class="sb-side">'+me+'<b>Salas '+esc(L.team)+'</b></div><div class="sb-score"><span class="us '+(fin?(w>l?'w':(l>w?'l':'e')):'e')+' num">'+w+'</span><i></i><span class="th num">'+l+'</span></div><div class="sb-side">'+rv+'<b>'+esc(L.rival||'Rival')+'</b></div></div>'
-  +'<div class="sb-meta"><span class="lv-state '+cls+'"><span class="lv-dot"></span>'+lab+'</span></div><div class="lv-chips">'
-  +L.pairs.map(function(p,i){var e=ev0[i];return'<div class="lv-chip '+(e.kind==='win'?'win':e.kind==='loss'?'loss':e.kind==='live'?'live':'')+'"><i>'+esc(p.id)+'</i><b>'+(e.dec||e.kind==='live'?e.us+'-'+e.th:'–')+'</b></div>'}).join('')+'</div></section>';
- h+=L.pairs.map(function(p,i){var e=ev0[i],nm=String(p.names||'').trim(),pill={win:'Ganada',loss:'Perdida',live:'En juego',idle:'Pendiente'}[e.kind],sets='';
-  for(var k=0;k<3;k++){if(e.st[k]!=='off'&&(p.sets[k][0]||p.sets[k][1]))sets+='<span class="lv-set '+(e.st[k]==='won'?'w':e.st[k]==='lost'?'l':'')+'"><small>Set '+(k+1)+'</small>'+p.sets[k][0]+'–'+p.sets[k][1]+'</span>'}
-  return'<article class="lv-pair '+e.kind+'"><div class="lv-top"><span class="lv-tag">'+esc(p.id)+'</span><div><div class="lv-names'+(nm?'':' e')+'">'+(nm?esc(nm):'Pareja por confirmar')+'</div>'+(p.time?'<div class="lv-time">'+esc(p.time)+'h</div>':'')+'</div><div class="lv-res"><b>'+e.us+' – '+e.th+'</b><span class="lv-pill '+e.kind+'">'+pill+'</span></div></div>'+(sets?'<div class="lv-sets">'+sets+'</div>':'')+'</article>'}).join('');
- var up='';try{if(L.updatedAt)up=new Date(L.updatedAt).toLocaleString('es-ES',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch(x){}
- h+='<p class="lv-hint">Datos del partido'+(up?' actualizados el '+esc(up):'')+'. Se renuevan cuando se publica el resultado en la app.</p>';
- inn.innerHTML=h}
-function open(){render();ov.hidden=false;root.classList.add('lvopen');ov.scrollTop=0;try{back.focus({preventScroll:true})}catch(e){}}
-function close(){ov.hidden=true;root.classList.remove('lvopen');try{lnk.focus({preventScroll:true})}catch(e){}}
+function buildText(){var L=['*'+(S.place||'')+'*'],d=fmtLong(S.date),last=null;if(d)L.push(d);
+ S.pairs.forEach(function(p){var e=ev(p);if(p.time&&p.time!==last){L.push('');L.push('*'+p.time+'h*');last=p.time}var nm=p.names.trim();L.push('*'+p.id+'  '+(nm?nm+'  ':'')+e.us+' - '+e.th+'*');var parts=[];for(var k=0;k<3;k++){if(e.st[k]!=='off'&&(p.sets[k][0]||p.sets[k][1]))parts.push(p.sets[k][0]+'/'+p.sets[k][1])}if(parts.length)L.push(parts.join('    '))});
+ var t=totals();L.push('');L.push('*'+(t.fin?'Resultado':'Resultado parcial')+': '+t.w+' - '+t.l+'*');return L.join('\n')}
+function toHtml(t){return t.split('\n').map(function(l){return esc(l).replace(/\*(.+?)\*/g,'<b>$1</b>')}).join('\n')}
+function touch(){S.updatedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function snap(){hist.push(JSON.stringify(S.pairs.map(function(p){return p.sets})));if(hist.length>60)hist.shift()}
+function undo(){if(!hist.length)return;var pv=JSON.parse(hist.pop());S.pairs.forEach(function(p,i){p.sets=pv[i]});touch();update()}
+function buzz(){try{if(navigator.vibrate)navigator.vibrate(8)}catch(e){}}
+function stepHtml(i,k,s,c){return'<div class="lv-step '+c+'"><button type="button" data-i="'+i+'" data-k="'+k+'" data-s="'+s+'" data-d="-1" aria-label="Restar juego">−</button><output data-out="'+i+'-'+k+'-'+s+'">0</output><button type="button" data-i="'+i+'" data-k="'+k+'" data-s="'+s+'" data-d="1" aria-label="Sumar juego">+</button></div>'}
+function cardHtml(p,i){var sh='';for(var k=0;k<3;k++)sh+='<div class="lv-set" data-i="'+i+'" data-k="'+k+'"><span class="lv-sl">Set '+(k+1)+'</span>'+stepHtml(i,k,0,'us')+stepHtml(i,k,1,'th')+'</div>';
+ var q=QUICK.map(function(x){return'<button type="button" data-i="'+i+'" data-q="'+x[0]+'-'+x[1]+'">'+x[0]+'-'+x[1]+'</button>'}).join('');
+ return'<article class="lv-pair" data-card="'+i+'"><div class="lv-top"><span class="lv-tag">'+esc(p.id)+'</span><div class="lv-nc"><input id="lvn'+i+'" class="lv-names" type="text" data-i="'+i+'" placeholder="Nombre / Nombre" aria-label="Nombres de la pareja '+esc(p.id)+'" autocomplete="off"><label class="lv-tbx" for="lvt'+i+'">Hora <input id="lvt'+i+'" class="lv-time" type="time" data-i="'+i+'"></label></div><div class="lv-res"><b data-res="'+i+'">0 – 0</b><span class="lv-pill" data-pill="'+i+'">Pendiente</span></div></div>'
+ +'<div class="lv-pickrow"><button type="button" class="lv-pick" data-i="'+i+'" data-pick="1" aria-expanded="false">Elegir jugadores</button></div><div class="lv-roster" data-roster="'+i+'" hidden></div>'
+ +'<div class="lv-sets"><div class="lv-setcols"><span></span><span>Nosotros</span><span>Rivales</span></div>'+sh+'</div>'
+ +'<div class="lv-quick" data-quick="'+i+'"><div class="lv-qh"><span class="lv-qt" data-qt="'+i+'">Cerrar set</span><div class="lv-seg" role="group" aria-label="Quién gana el set"><button type="button" data-i="'+i+'" data-win="us" aria-pressed="true">Ganamos</button><button type="button" data-i="'+i+'" data-win="them" aria-pressed="false">Ganan ellos</button></div></div><div class="lv-qc">'+q+'</div></div></article>'}
+function buildShell(){inn.innerHTML='<input id="lvplace" class="lv-place" type="text" aria-label="Sala y rival" autocomplete="off">'
+ +'<label class="lv-datepill" for="lvdate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><input id="lvdate" type="date" aria-label="Fecha"></label>'
+ +'<section class="lv-match"><span class="lv-fl">Equipo de Salas</span><div class="lv-teams" role="group" aria-label="Equipo de Salas">'+TEAMS.map(function(t){return'<button type="button" class="lv-tb" data-t="'+t+'" aria-pressed="false">'+withTeam(t,function(){return crest(null,34)})+'<b>'+t+'</b></button>'}).join('')+'</div>'
+ +'<div class="lv-fg"><label class="lv-fl" for="lvjor">Jornada y rival</label><select id="lvjor" class="lv-field"></select></div><div id="lvrw" class="lv-fg" hidden><label class="lv-fl" for="lvriv">Nombre del rival</label><input id="lvriv" class="lv-field" type="text" placeholder="Equipo rival" autocomplete="off"></div></section>'
+ +'<section class="board" aria-live="polite"><div class="sb-top"><div class="sb-side" id="lvme"></div><div class="sb-score"><span id="lvsw" class="us e">0</span><i></i><span id="lvsl" class="th">0</span></div><div class="sb-side" id="lvrv"></div></div><div class="sb-meta"><span id="lvst" class="lv-state"><span class="lv-dot"></span><span id="lvlab">Resultado parcial</span></span><span class="lv-saved">Se guarda en este móvil</span></div><div id="lvchips" class="lv-chips"></div></section>'
+ +'<section id="lvpairs" class="lv-pairs">'+S.pairs.map(cardHtml).join('')+'</section>'
+ +'<section class="lv-sec"><div class="lv-mh"><h2>Mensaje para el grupo</h2><span id="lvsync" class="lv-sync">Sin copiar</span></div><div id="lvbub" class="lv-bubble"></div><p class="lv-hint">Copia este mensaje y pégalo en el grupo de WhatsApp. Los resultados se guardan solo en este móvil.</p></section>'
+ +'<label class="lv-opts" for="lvawake"><input id="lvawake" type="checkbox"> Mantener la pantalla encendida</label>'
+ +'<div class="lv-reset"><button id="lvreset" class="lv-ghost danger" type="button">Nueva jornada</button><div id="lvask" hidden class="lv-reset"><span>¿Borrar nombres y resultados?</span><button id="lvyes" class="lv-ghost danger" type="button">Sí, borrar</button><button id="lvno" class="lv-ghost" type="button">Cancelar</button></div></div>';
+ built=true;buildJor();fields();wire()}
+function buildJor(){var c=SALAS_CAL[S.team]||[],h='';c.forEach(function(e){var rest=!e[2];h+='<option value="'+e[0]+'"'+(rest?' disabled':'')+'>'+esc('J'+e[0]+' · '+e[1]+' · '+(rest?'Descansa':e[2]+(e[3]===1?' · Casa':e[3]===0?' · Fuera':'')))+'</option>'});h+='<option value="0">Otro rival…</option>';var s=$('#lvjor');s.innerHTML=h;s.value=String(S.jor||0)}
+function fields(){$('#lvplace').value=S.place||'';$('#lvdate').value=S.date||'';$('#lvriv').value=S.jor?'':(S.rival||'');$('#lvjor').value=String(S.jor||0);S.pairs.forEach(function(p,i){$('#lvn'+i).value=p.names;$('#lvt'+i).value=p.time||''})}
+function usedNames(ex){var u={};S.pairs.forEach(function(p,i){if(i!==ex)p.names.split('/').forEach(function(n){n=n.trim();if(n)u[n]=true})});return u}
+function rosters(){S.pairs.forEach(function(p,i){var box=$('[data-roster="'+i+'"]'),b=$('.lv-pick[data-i="'+i+'"]'),o=pickOpen===i;box.hidden=!o;b.setAttribute('aria-expanded',String(o));b.textContent=o?'Cerrar':'Elegir jugadores';if(!o){box.innerHTML='';return}
+ var used=usedNames(i),h='<span class="lv-fl">'+(pickSel.length?'Elegido: '+esc(pickSel.join(', '))+'. Toca el segundo.':'Toca dos jugadores')+'</span><span class="lv-fl">Plantilla de Salas '+S.team+'</span><div class="lv-rc">';
+ (SALAS_ROSTER[S.team]||[]).forEach(function(n){var c=(pickSel.indexOf(n)>=0?'sel':'')+(used[n]?' used':'');h+='<button type="button" class="'+c.trim()+'" data-i="'+i+'" data-pl="'+esc(n)+'">'+esc(n)+'</button>'});box.innerHTML=h+'</div>'})}
+var PILL={win:'Ganada',loss:'Perdida',live:'En juego',idle:'Pendiente'};
+function update(){if(!built)return;
+ var meH=withTeam(S.team,function(){return crest(null,52)+'<b>Salas '+esc(S.team)+'</b>'}),rvH=withTeam(S.team,function(){return crest(S.rival||'',52)})+'<b>'+esc(S.rival||'Rival')+'</b>';
+ if($('#lvme').innerHTML!==meH)$('#lvme').innerHTML=meH;if($('#lvrv').innerHTML!==rvH)$('#lvrv').innerHTML=rvH;
+ var tb=inn.querySelectorAll('.lv-tb');for(var x=0;x<tb.length;x++)tb[x].setAttribute('aria-pressed',String(tb[x].dataset.t===S.team));
+ $('#lvrw').hidden=!!S.jor;
+ var chips='';S.pairs.forEach(function(p,i){var e=ev(p),c=e.kind==='idle'?'':e.kind;chips+='<div class="lv-chip '+c+'"><i>'+esc(p.id)+'</i><b>'+e.us+'–'+e.th+'</b></div>';
+  $('[data-card="'+i+'"]').className='lv-pair'+(e.kind==='win'?' is-win':e.kind==='loss'?' is-loss':'');$('[data-res="'+i+'"]').textContent=e.us+' – '+e.th;var pl=$('[data-pill="'+i+'"]');pl.textContent=PILL[e.kind];pl.className='lv-pill '+c;
+  for(var k=0;k<3;k++){var row=$('.lv-set[data-i="'+i+'"][data-k="'+k+'"]'),st=e.st[k];row.className='lv-set '+(st==='won'?'lw':st==='lost'?'ll':st==='off'?'xo':'');for(var s=0;s<2;s++)$('[data-out="'+i+'-'+k+'-'+s+'"]').textContent=p.sets[k][s];var bt=row.querySelectorAll('button');for(var b=0;b<bt.length;b++)bt[b].disabled=st==='off'}
+  var q=$('[data-quick="'+i+'"]');q.hidden=e.act===-1;if(e.act!==-1)$('[data-qt="'+i+'"]').textContent='Cerrar set '+(e.act+1);var sg=q.querySelectorAll('.lv-seg button');for(var z=0;z<sg.length;z++)sg[z].setAttribute('aria-pressed',String(sg[z].dataset.win===winSide[i]))});
+ $('#lvchips').innerHTML=chips;rosters();
+ var t=totals();$('#lvsw').textContent=t.w;$('#lvsl').textContent=t.l;$('#lvsw').className='us '+(t.w>t.l?'w':t.w<t.l?'l':'e');$('#lvsl').className='th'+(t.l>t.w?' w':'');$('#lvlab').textContent=t.fin?'Resultado final':'Resultado parcial';$('#lvst').className='lv-state'+(t.fin?' fin':'');
+ var tx=buildText();$('#lvbub').innerHTML=toHtml(tx);var sy=$('#lvsync'),same=lastCopied===tx;sy.textContent=same?'Copiado, al día':(lastCopied===null?'Sin copiar':'Cambios sin copiar');sy.className='lv-sync'+(same?' ok':'');undoB.disabled=!hist.length}
+function applyJor(j){var e=calEntry(S.team,j);S.jor=j;if(e){S.rival=e[2];if(e[5]&&e[5].d)S.date=e[5].d.slice(0,10)}S.place=autoPlace()}
+function pairsClick(ev){var b=ev.target.closest('button');if(!b||b.disabled)return;var i=+b.dataset.i;
+ if(b.dataset.d){var k=+b.dataset.k,s=+b.dataset.s,v=Math.max(0,Math.min(7,S.pairs[i].sets[k][s]+(+b.dataset.d)));if(v===S.pairs[i].sets[k][s])return;snap();S.pairs[i].sets[k][s]=v;buzz();touch();update()}
+ else if(b.dataset.q){var e=ev_(S.pairs[i]);if(e.act===-1)return;var pr=b.dataset.q.split('-').map(Number);snap();S.pairs[i].sets[e.act]=winSide[i]==='us'?[pr[0],pr[1]]:[pr[1],pr[0]];buzz();touch();update()}
+ else if(b.dataset.win){winSide[i]=b.dataset.win;update()}
+ else if(b.dataset.pick){pickOpen=pickOpen===i?-1:i;pickSel=[];update()}
+ else if(b.dataset.pl){var nm=b.dataset.pl,at=pickSel.indexOf(nm);if(at>=0)pickSel.splice(at,1);else pickSel.push(nm);if(pickSel.length===2){S.pairs[i].names=pickSel[0]+' / '+pickSel[1];$('#lvn'+i).value=S.pairs[i].names;pickOpen=-1;pickSel=[];buzz();touch()}update()}}
+function wake(){try{if(!ov.hidden&&awakeOn()&&!wl&&navigator.wakeLock&&document.visibilityState==='visible')navigator.wakeLock.request('screen').then(function(l){wl=l;l.addEventListener('release',function(){wl=null})}).catch(function(){})}catch(e){}}
+function unwake(){if(wl){try{wl.release()}catch(e){}wl=null}}
+function awakeOn(){try{return localStorage.getItem(AWK)!=='0'}catch(e){return true}}
+function open(){if(!built)buildShell();ov.hidden=false;root.classList.add('lvopen');update();ov.scrollTop=0;wake();try{back.focus({preventScroll:true})}catch(e){}}
+function close(){ov.hidden=true;root.classList.remove('lvopen');unwake();try{lnk.focus({preventScroll:true})}catch(e){}}
 function route(){if(location.hash==='#marcador'){if(ov.hidden)open()}else if(!ov.hidden)close()}
 lnk.addEventListener('click',function(e){e.preventDefault();if(location.hash!=='#marcador'){try{history.pushState(null,'','#marcador')}catch(x){location.hash='#marcador'}}open()});
 back.addEventListener('click',function(){if(location.hash==='#marcador'){try{history.back();return}catch(x){}}close()});
 window.addEventListener('popstate',route);window.addEventListener('hashchange',route);
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!ov.hidden)back.click()});
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')wake()});
+undoB.addEventListener('click',undo);
+copyB.addEventListener('click',function(){var tx=buildText();function flash(m){copyB.textContent=m;clearTimeout(copyTimer);copyTimer=setTimeout(function(){copyB.textContent='Copiar mensaje'},2000)}
+ function done(){lastCopied=tx;update();flash('Copiado')}function fb(){try{var r=document.createRange();r.selectNodeContents($('#lvbub'));var s=window.getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}flash('Texto seleccionado, cópialo')}
+ try{navigator.clipboard.writeText(tx).then(done,fb)}catch(e){fb()}});
+function wire(){
+ $('#lvpairs').addEventListener('click',pairsClick);
+ $('#lvpairs').addEventListener('input',function(e){var t=e.target,i=+t.dataset.i;if(t.classList.contains('lv-names'))S.pairs[i].names=t.value;else if(t.classList.contains('lv-time'))S.pairs[i].time=t.value;else return;touch();update()});
+ $('#lvplace').addEventListener('input',function(e){S.place=e.target.value;touch();update()});
+ $('#lvdate').addEventListener('input',function(e){S.date=e.target.value;touch();update()});
+ inn.querySelector('.lv-teams').addEventListener('click',function(e){var b=e.target.closest('.lv-tb');if(!b||b.dataset.t===S.team)return;S.team=b.dataset.t;applyJor(defaultJor(S.team));pickOpen=-1;pickSel=[];buildJor();touch();fields();update()});
+ $('#lvjor').addEventListener('change',function(e){var j=+e.target.value;if(j)applyJor(j);else{S.jor=0;S.rival='';S.place=autoPlace()}buildJor();touch();fields();update();if(!j){try{$('#lvriv').focus()}catch(x){}}});
+ $('#lvriv').addEventListener('input',function(e){S.rival=e.target.value;S.place=autoPlace();$('#lvplace').value=S.place;touch();update()});
+ var aw=$('#lvawake');aw.checked=awakeOn();aw.addEventListener('change',function(e){try{localStorage.setItem(AWK,e.target.checked?'1':'0')}catch(x){}if(e.target.checked)wake();else unwake()});
+ var rb=$('#lvreset'),ask=$('#lvask');rb.addEventListener('click',function(){rb.hidden=true;ask.hidden=false});$('#lvno').addEventListener('click',function(){ask.hidden=true;rb.hidden=false});
+ $('#lvyes').addEventListener('click',function(){var n=new Date();S.date=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');S.pairs.forEach(function(p){p.names='';p.sets=[[0,0],[0,0],[0,0]]});hist=[];lastCopied=null;winSide=['us','us','us','us','us'];touch();fields();update();ask.hidden=true;rb.hidden=false})}
+var ev_=ev;
 if(location.hash==='#marcador')setTimeout(route,0);
 })();
 })();
