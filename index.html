@@ -2,7 +2,7 @@
 <html lang="es" data-theme="dark"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="bd4787d690">
+<meta name="build" content="b3446ed5ba">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -709,6 +709,16 @@ html.lvopen,html.lvopen body{overflow:hidden}
 .lv-cnt output{min-width:70px;text-align:center;font-weight:600;font-size:14px}
 .lv-rm{color:var(--loss);border-color:rgba(255,125,110,.45)}
 @media (max-width:380px){.lv-qc button{font-size:16px}}
+
+/* === Zonas del ranking (referencia Fase II) === */
+:root{--zo:#e2b93b;--zp:#b4bcc7;--zb:#c98550}
+.eqrow.zo{box-shadow:inset 3px 0 0 var(--zo)}.eqrow.zp{box-shadow:inset 3px 0 0 var(--zp)}.eqrow.zb{box-shadow:inset 3px 0 0 var(--zb)}
+.eqrow.zo>span:first-child{color:var(--zo)!important;font-weight:800}.eqrow.zp>span:first-child{color:var(--zp)!important;font-weight:800}.eqrow.zb>span:first-child{color:var(--zb)!important;font-weight:800}
+.eqrow.me>span:first-child{color:inherit!important}
+.zlg{display:flex;flex-wrap:wrap;gap:6px 14px;margin:12px 0 0;font-size:12px;color:var(--muted)}
+.zlg span{display:flex;align-items:center;gap:6px}.zlg i{width:10px;height:10px;border-radius:3px;background:var(--zo)}
+.zlg .p i{background:var(--zp)}.zlg .b i{background:var(--zb)}
+.zn{margin-top:6px;font-size:12px;line-height:1.45;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -801,10 +811,11 @@ function eqTot(n){var sw=0,sl=0,gf=0,ga=0,ok=0;eqGames(n).forEach(function(x){if
 function ligaNext(){var c=nextMatch();if(!c)return'';var DD=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],mm=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'],x=c[5]||{},when2='',dt=x.d?new Date(x.d):null;if(dt&&!isNaN(dt)){when2=DD[dt.getDay()]+' '+dt.getDate()+' '+mm[dt.getMonth()]+' · '+('0'+dt.getHours()).slice(-2)+':'+('0'+dt.getMinutes()).slice(-2)}else when2=c[1];var ant=eqGames(c[2]).filter(function(g){return g[1]!=='Salas '+team}),info='';if(ant.length){var g=ant[ant.length-1];info='En la J'+g[0]+' '+(g[3]>g[4]?'ganó '+g[3]+'–'+g[4]:g[3]<g[4]?'perdió '+g[3]+'–'+g[4]:'empató '+g[3]+'–'+g[4])+' contra '+g[1]+'.'}return'<div class="ln"><span class="lnk">Próximo rival · J'+c[0]+'</span><b>'+esc(c[2])+'</b><span class="lnt">'+esc(when2)+(x.p?' · '+esc(x.p):'')+'</span>'+(info?'<span class="lnt">'+esc(info)+'</span>':'')+'</div>'}
 function viewLiga(){var R=SALAS_RANK[team];if(!R)return empty('Clasificación pendiente','');
   var has=R.t.some(function(x){return x.length>1}),g='grid-template-columns:20px 1fr 24px 42px 54px 28px;gap:4px;align-items:center;padding:10px 12px;';
-  var h='<h2>Clasificación</h2><div class="note" style="margin:-6px 0 12px">'+esc(R.cat.charAt(0).toUpperCase()+R.cat.slice(1))+'</div><div class="card" style="padding:0;overflow:hidden"><div style="display:grid;'+g+'font-size:11px;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line)"><span>#</span><span>Equipo</span><span style="text-align:center">PJ</span><span style="text-align:center">Sets</span><span style="text-align:center">Juegos</span><span style="text-align:center">Pts</span></div>';
+  var h='<h2>CLASIFICACIÓN FASE I</h2><div class="note" style="margin:-6px 0 12px">'+esc(R.cat.charAt(0).toUpperCase()+R.cat.slice(1))+'</div><div class="card" style="padding:0;overflow:hidden"><div style="display:grid;'+g+'font-size:11px;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line)"><span>#</span><span>Equipo</span><span style="text-align:center">PJ</span><span style="text-align:center">Sets</span><span style="text-align:center">Juegos</span><span style="text-align:center">Pts</span></div>';
+  var n=R.t.length,zf=function(i){return n===7?(i<4?'zo':'zp'):(i<2?'zo':i<4?'zp':i<6?'zb':'')};
   R.t.forEach(function(x,i){var me=x[0]==='Salas '+team,v=function(k){return x[k]==null?'–':x[k]},t=eqTot(x[0]);
-    h+='<div data-act="eq" class="eqrow" style="display:grid;'+g+'border-top:1px solid var(--line);cursor:pointer;'+(me?'background:var(--lime);color:var(--lime-ink);font-weight:700':'')+'"><span style="color:'+(me?'inherit':'var(--muted)')+'">'+(has?i+1:'–')+'</span><span style="min-width:0">'+esc(x[0])+'<i class="chev">›</i></span><span style="text-align:center">'+v(1)+'</span><span style="text-align:center;font-size:12.5px">'+(t?t.s:'–')+'</span><span style="text-align:center;font-size:12px">'+(t?t.j:'–')+'</span><span style="text-align:center;font-weight:800">'+v(4)+'</span></div><div class="eqp" hidden>'+eqPanel(x[0])+'</div>'});
-  h+='</div>'+ligaNext()+'<div class="note">'+(has?'Datos de la Federación Cántabra de Pádel. ':'La Federación todavía no ha publicado la clasificación de este grupo. Se rellenará aquí cuando lo haga. ')+'Toca un equipo para ver sus partidos y, dentro, cada pareja con sus sets.</div>';return h}
+    h+='<div data-act="eq" class="eqrow '+zf(i)+(me?' me':'')+'" style="display:grid;'+g+'border-top:1px solid var(--line);cursor:pointer;'+(me?'background:var(--lime);color:var(--lime-ink);font-weight:700':'')+'"><span style="color:'+(me?'inherit':'var(--muted)')+'">'+(has?i+1:'–')+'</span><span style="min-width:0">'+esc(x[0])+'<i class="chev">›</i></span><span style="text-align:center">'+v(1)+'</span><span style="text-align:center;font-size:12.5px">'+(t?t.s:'–')+'</span><span style="text-align:center;font-size:12px">'+(t?t.j:'–')+'</span><span style="text-align:center;font-weight:800">'+v(4)+'</span></div><div class="eqp" hidden>'+eqPanel(x[0])+'</div>'});
+  h+='</div>'+(has?(n===7?'<div class="zlg"><span><i></i>Oro · puestos 1-4 (Liga Oro)</span><span class="p"><i></i>Plata · puestos 5-7 (Liga Plata)</span></div>':'<div class="zlg"><span><i></i>Oro · 1º y 2º</span><span class="p"><i></i>Plata · 3º y 4º</span><span class="b"><i></i>Bronce · 5º y 6º</span></div>')+'<div class="zn">'+(n===7?'Referencia por posición: al acabar la Fase I, los 4 primeros juegan la Liga Oro y el resto la Liga Plata.':'Referencia por posición: al acabar la Fase I, los 4 primeros juegan la Liga Oro/Plata y los 4 últimos la Liga Bronce/Descenso. Los colores son orientativos hasta que termine la fase.')+'</div>':'')+ligaNext()+'<div class="note">'+(has?'Datos de la Federación Cántabra de Pádel. ':'La Federación todavía no ha publicado la clasificación de este grupo. Se rellenará aquí cuando lo haga. ')+'Toca un equipo para ver sus partidos y, dentro, cada pareja con sus sets.</div>';return h}
 function when(f){var m=/^(\d{1,2})\s*(?:[–-]\s*\d{1,2}\s+)?([a-z]{3})/i.exec(String(f||'').replace(/\s+/g,' ').trim());if(!m)return'';var mi=MM.indexOf(m[2].toLowerCase());if(mi<0)return'';var y=mi<6?2027:2026,t=new Date(),a=new Date(t.getFullYear(),t.getMonth(),t.getDate()),b=new Date(y,mi,+m[1]),d=Math.round((b-a)/864e5);if(d<-2||d>120)return'';return'<span class="when">'+(d>1?'En '+d+' días':d===1?'Mañana':d===0?'Hoy':'Este fin de semana')+'</span>'}
 function cdParts(ms){var s=Math.max(0,Math.floor(ms/1000)),p=function(n){return(n<10?'0':'')+n};return[p(Math.floor(s/3600)),p(Math.floor(s%3600/60)),p(s%60)]}
 function cdP(ms){return Math.round(Math.min(1,ms/6048e5)*1000)/10}
