@@ -2,7 +2,7 @@
 <html lang="es" data-theme="dark"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="b3446ed5ba">
+<meta name="build" content="0580428389">
 <meta name="theme-color" content="#1c1f17">
 <meta name="color-scheme" content="dark">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1056,7 +1056,7 @@ if(!SALAS_LIVE||!ov||!inn||!lnk)return;
 var KEY='salas.marcador.v1',AWK='salas.marcador.awake',TEAMS=['A','B','C','D','F'],QUICK=[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]];
 var DAYS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 var S=JSON.parse(JSON.stringify(SALAS_LIVE)),hist=[],winSide=['us','us','us','us','us'],lastCopied=null,pickOpen=-1,pickSel=[],built=false,wl=null,copyTimer;
-try{var sv=JSON.parse(localStorage.getItem(KEY)||'null');if(sv&&sv.pairs&&sv.pairs.length>=1&&(sv.updatedAt||0)>=(SALAS_LIVE.updatedAt||0))S=sv}catch(e){}
+try{var sv=JSON.parse(localStorage.getItem(KEY)||'null');if(sv&&sv.pairs&&sv.pairs.length>=1){var prog=sv.pairs.some(function(p){return (p.names||'').trim()||(p.sets||[]).some(function(x){return x[0]||x[1]})}),fresh=Date.now()-(sv.updatedAt||0)<36*36e5;if((sv.updatedAt||0)>=(SALAS_LIVE.updatedAt||0)||(prog&&fresh))S=sv}}catch(e){}
 function hhSort(a){return a.filter(function(x,i){return x&&a.indexOf(x)===i}).sort()}
 if(!S.tandas)S.tandas=hhSort(S.pairs.map(function(p){return p.time}));
 function $(s){return inn.querySelector(s)}
@@ -1171,5 +1171,5 @@ if(location.hash==='#marcador')setTimeout(route,0);
 
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
-<script>(function(){var B=document.querySelector('meta[name=build]');B=B&&B.content;if(!B)return;var busy=0;function chk(){if(busy)return;busy=1;fetch('./?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="build" content="(\w+)"/);if(m&&m[1]!==B)location.reload();else busy=0}).catch(function(){busy=0})}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')chk()});window.addEventListener('online',chk);window.addEventListener('pageshow',chk);setInterval(chk,300000)})()</script>
+<script>(function(){var B=document.querySelector('meta[name=build]');B=B&&B.content;if(!B)return;var busy=0;function chk(){if(busy)return;busy=1;fetch('./?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/name="build" content="(\w+)"/);var lv=document.getElementById('lv');if(m&&m[1]!==B&&lv&&!lv.hidden)busy=0;else if(m&&m[1]!==B)location.reload();else busy=0}).catch(function(){busy=0})}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')chk()});window.addEventListener('online',chk);window.addEventListener('hashchange',function(){setTimeout(chk,400)});window.addEventListener('pageshow',chk);setInterval(chk,300000)})()</script>
 </body></html>
